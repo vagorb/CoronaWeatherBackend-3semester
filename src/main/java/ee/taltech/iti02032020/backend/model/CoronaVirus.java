@@ -10,14 +10,18 @@ public class CoronaVirus {
 
     @Id
     @GeneratedValue
-    private String cityName;// countryName
+    private String cityName = "Estonia";// countryName
     private Long id;
+
+    public CoronaVirus(String cityName, Long id) {
+        this.cityName = cityName;
+        this.id = id;
+    }
 
     public CoronaVirus() {
     }
 
     // Teacher had 3 constructors
-
 
 
     public Long getId() {
