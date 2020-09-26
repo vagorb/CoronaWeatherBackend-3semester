@@ -39,19 +39,4 @@ public class IndexController {
     public String greeting(@PathVariable String name){
         return String.format("Hello for %s", name);
     }
-//    @GetMapping("number")
-//    public Integer integer(){
-//        return 123;
-//    }
-//
-//    @GetMapping("CoronaVirus")
-//    public CoronaVirus someCoronaVirus(){
-//        return new CoronaVirus();
-//    }
-//
-//    @GetMapping("greeting")
-//    public String greeting(@RequestParam(required = false, defaultValue = "Dima") String name,
-//                           @RequestParam(required = false) String job){
-//        return String.format("Hello %s you good %s", name, job);
-//    }
 }

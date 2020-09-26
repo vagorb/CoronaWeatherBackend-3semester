@@ -24,10 +24,9 @@ public class CoronaVirusController {
     @Autowired
     private CoronaVirusService coronaViruses;
 
-
     @GetMapping
-    public List<CoronaVirus> getStringValue(@RequestParam(value = "name", required = false) String name) {
-        return coronaViruses.findAll(name);
+    public List<CoronaVirus> getStringValue() {
+        return coronaViruses.findAll();
     }
 
     @GetMapping("{id}")

@@ -11,15 +11,10 @@ import java.util.List;
 
 @Service
 public class CoronaVirusService {
-
-
-
-
     @Autowired
     private CoronaVirusRepository coronaVirusRepository;
 
-    public List<CoronaVirus> findAll(String name) {
-        //todo add name
+    public List<CoronaVirus> findAll() {
         return coronaVirusRepository.findAll();
     }
 

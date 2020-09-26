@@ -12,9 +12,6 @@ public class BackendApplication {
 
 
 	public static void main(String[] args) throws IOException {
-		CoronaRequest request = new CoronaRequest();
-		Response req = request.CoronaRequestCountry();
-		System.out.println(req);
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
