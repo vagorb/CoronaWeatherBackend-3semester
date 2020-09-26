@@ -3,7 +3,7 @@ package ee.taltech.iti02032020.backend;
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
 import ee.taltech.iti02032020.backend.request.CoronaRequest;
-import okhttp3.Response;
+import ee.taltech.iti02032020.backend.request.WeatherRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,15 +17,19 @@ public class BackendApplicationInit implements CommandLineRunner {
     @Autowired
     private CoronaVirusRepository coronaVirusRepository;
 
-    private CoronaRequest request;
+    private WeatherRequest request;
 
     @Override
     public void run(String... args) throws Exception {
         List<CoronaVirus> coronaViruses = List.of(
-                new CoronaVirus("estonia", 1L),
-                new CoronaVirus("Canada", 2L)
+                new CoronaVirus(),
+                new CoronaVirus(),
+                new CoronaVirus(),
+                new CoronaVirus()
         );
         coronaVirusRepository.saveAll(coronaViruses);
+        request.WeatherRequestCity();
+        System.out.println(request.WeatherRequestCity());
 
     }
 }

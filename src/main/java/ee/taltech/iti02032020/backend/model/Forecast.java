@@ -26,5 +26,5 @@ public class Forecast {
     @OneToMany
     private List<CoronaVirus> coronaVirus;
 
-    
+
 }

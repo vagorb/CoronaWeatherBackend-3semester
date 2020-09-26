@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class CoronaRequest {
 
-    public CoronaRequest() throws IOException {
+    public CoronaRequest() {
 
     }
 
@@ -19,9 +19,9 @@ public class CoronaRequest {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://covid-19-data.p.rapidapi.com/country?format=json&name=estonia")
+                .url("https://coronavirus-map.p.rapidapi.com/v1/summary/region?region=china")
                 .get()
-                .addHeader("x-rapidapi-host", "covid-19-data.p.rapidapi.com")
+                .addHeader("x-rapidapi-host", "coronavirus-map.p.rapidapi.com")
                 .addHeader("x-rapidapi-key", "93172dfd82mshaeae41651c77f61p1382d2jsn6fe87dae6648")
                 .build();
 
