@@ -25,4 +25,6 @@ public class Forecast {
     private String cityName;
     @OneToMany
     private List<CoronaVirus> coronaVirus;
+
+    
 }
