@@ -13,9 +13,9 @@ public class BackendApplication {
 
 
 	public static void main(String[] args) throws IOException {
-		WeatherRequest request = new WeatherRequest();
-		Response req = request.WeatherRequestCity();
-		System.out.println(req);
+//		WeatherRequest request = new WeatherRequest();
+//		Response req = request.WeatherRequestCity();
+//		System.out.println(req);
 		SpringApplication.run(BackendApplication.class, args);
 	}
 

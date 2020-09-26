@@ -17,19 +17,19 @@ public class BackendApplicationInit implements CommandLineRunner {
     @Autowired
     private CoronaVirusRepository coronaVirusRepository;
 
-    private WeatherRequest request;
+//    private WeatherRequest request;
 
     @Override
     public void run(String... args) throws Exception {
         List<CoronaVirus> coronaViruses = List.of(
-                new CoronaVirus(),
-                new CoronaVirus(),
-                new CoronaVirus(),
+                new CoronaVirus("hello"),
+                new CoronaVirus("vasja"),
+                new CoronaVirus("dimass"),
                 new CoronaVirus()
         );
         coronaVirusRepository.saveAll(coronaViruses);
-        request.WeatherRequestCity();
-        System.out.println(request.WeatherRequestCity());
+//        request.WeatherRequestCity();
+//        System.out.println(request.WeatherRequestCity());
 
     }
 }

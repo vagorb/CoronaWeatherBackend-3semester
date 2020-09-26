@@ -25,30 +25,27 @@ public class CoronaVirusController {
     private CoronaVirusService coronaViruses;
 
     @GetMapping
-    public List<CoronaVirus> getStringValue() {
+    public List<CoronaVirus> getCoronaViruses() {
         return coronaViruses.findAll();
     }
 
     @GetMapping("{id}")
-    public CoronaVirus getHero(@PathVariable Long id) {
+    public CoronaVirus getCoronaViruses(@PathVariable Long id) {
         return coronaViruses.findById(id);
     }
 
-    //todo save
     @PostMapping
-    public CoronaVirus saveHero(@RequestBody CoronaVirus hero) {
+    public CoronaVirus saveCoronaVirus(@RequestBody CoronaVirus hero) {
         return coronaViruses.save(hero);
     }
 
-    //todo update
     @PutMapping("{id}")
-    public CoronaVirus updateHero(@RequestBody CoronaVirus hero, @PathVariable Long id) {
+    public CoronaVirus updateCoronaVirus(@RequestBody CoronaVirus hero, @PathVariable Long id) {
         return coronaViruses.update(hero, id);
     }
 
-    //todo delete
     @DeleteMapping("{id}")
-    public void updateHero(@PathVariable Long id) {
+    public void deleteCoronaViruse(@PathVariable Long id) {
         coronaViruses.delete(id);
     }
 }
