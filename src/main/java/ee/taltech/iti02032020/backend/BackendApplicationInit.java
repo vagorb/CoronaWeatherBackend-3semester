@@ -2,31 +2,32 @@ package ee.taltech.iti02032020.backend;
 
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
+import ee.taltech.iti02032020.backend.request.CoronaRequest;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class BackendApplicationInit implements CommandLineRunner {
 
 
     @Autowired
     private CoronaVirusRepository coronaVirusRepository;
 
+    private CoronaRequest request;
+
     @Override
     public void run(String... args) throws Exception {
         List<CoronaVirus> coronaViruses = List.of(
-                new CoronaVirus("Batman", 1L),
-                new CoronaVirus("Superman", 2L),
-                new CoronaVirus("Wonder Woman", 3L),
-                new CoronaVirus("Spider-Man", 4L)
-//                new CoronaVirus("Wolverine"),
-//                new CoronaVirus("Thor"),
-//                new CoronaVirus("Black Widow"),
-//                new CoronaVirus("Captain Marvel"),
-//                new CoronaVirus("Wasp"),
-//                new CoronaVirus("Hulk")
+                new CoronaVirus(),
+                new CoronaVirus(),
+                new CoronaVirus(),
+                new CoronaVirus()
         );
         coronaVirusRepository.saveAll(coronaViruses);
+
     }
 }

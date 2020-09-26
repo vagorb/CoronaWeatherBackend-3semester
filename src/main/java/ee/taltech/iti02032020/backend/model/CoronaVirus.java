@@ -1,27 +1,36 @@
 package ee.taltech.iti02032020.backend.model;
 
 
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+
 @Entity
+@Getter
+
 public class CoronaVirus {
 
     @Id
     @GeneratedValue
-    private String cityName = "Estonia";// countryName
     private Long id;
+    private String cityName;
 
-    public CoronaVirus(String cityName, Long id) {
-        this.cityName = cityName;
-        this.id = id;
-    }
 
     public CoronaVirus() {
     }
 
-    // Teacher had 3 constructors
+    public CoronaVirus(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public CoronaVirus(String cityName, Long id) {
+        this.id = id;
+        this.cityName = cityName;
+
+    }
 
 
     public Long getId() {
