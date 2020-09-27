@@ -36,8 +36,8 @@ public class CoronaVirus {
     private String recoveredCases;
     private String totalDeaths;
     private String currentCases;
-    @ManyToOne
-    private Forecast forecast;
+//    @ManyToOne
+//    private Forecast forecast;
 
     public CoronaVirus(String countryName, String totalCases, String recoveredCases, String totalDeaths, String currentCases) {
         this.countryName = countryName;
