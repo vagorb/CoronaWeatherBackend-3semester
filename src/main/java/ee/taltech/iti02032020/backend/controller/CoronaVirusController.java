@@ -2,6 +2,7 @@ package ee.taltech.iti02032020.backend.controller;
 
 
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
+import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
 import ee.taltech.iti02032020.backend.request.CoronaRequest;
 import ee.taltech.iti02032020.backend.service.CoronaVirusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class CoronaVirusController {
     private CoronaRequest coronaRequest = new CoronaRequest();
 
     @Autowired
+    private CoronaVirusRepository coronaVirusRepository;
+
+    @Autowired
     private CoronaVirusService coronaViruses;
 
     @GetMapping
@@ -43,8 +47,10 @@ public class CoronaVirusController {
     }
 
     @PostMapping
-    public CoronaVirus saveCoronaVirus(@RequestBody CoronaVirus hero) {
-        return coronaViruses.save(hero);
+    public void saveCoronaVirus(@RequestBody String country) throws IOException {
+        String coronaInfo = coronaRequest.CoronaRequestCountry(country);
+        CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
+        coronaVirusRepository.save(coronaVirus);
     }
 
     @PutMapping("{id}")
