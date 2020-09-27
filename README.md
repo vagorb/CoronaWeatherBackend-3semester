@@ -7,7 +7,7 @@ Technologies:
 ***
 Backend Technologies:
 Java, spring, h2 databases, sql, external API.
-*
+
 Frontend technologies: 
 Angular, javascript, typescript, html, css.
 ***
