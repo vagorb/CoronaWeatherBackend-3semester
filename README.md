@@ -11,6 +11,8 @@ Angular, javascript, typescript, html, css.
 ***
 Backend 
 Store data from API, communicate with API.
+***
+The purpose of the app is to show you information about different topics (Weather and corona virus) in a beautiful and concise way.
 
 
     
