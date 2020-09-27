@@ -12,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 
+//@Entity
+//@Getter
+//@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Entity
 @Getter
 @Setter
@@ -22,17 +27,21 @@ public class CoronaVirus {
     @Id
     @GeneratedValue
     private Long id;
-    private String cityName;
+    private String countryName;
+    private String totalCases;
+    private String recoveredCases;
+    private String totalDeaths;
+    private String currentCases;
     @ManyToOne
     private Forecast forecast;
 
-    public CoronaVirus(String cityName) {
-        this.cityName = cityName;
+    public CoronaVirus(String countryName, String totalCases, String recoveredCases, String totalDeaths, String currentCases) {
+        this.countryName = countryName;
+        this.totalCases = totalCases;
+        this.recoveredCases = recoveredCases;
+        this.totalDeaths = totalDeaths;
+        this.currentCases = currentCases;
     }
 
-    public CoronaVirus(String cityName, Long id) {
-        this.id = id;
-        this.cityName = cityName;
 
-    }
 }

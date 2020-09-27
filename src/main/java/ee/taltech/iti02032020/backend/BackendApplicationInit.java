@@ -17,13 +17,11 @@ public class BackendApplicationInit implements CommandLineRunner {
     @Autowired
     private CoronaVirusRepository coronaVirusRepository;
 
-    private CoronaRequest request;
-
     @Override
     public void run(String... args) throws Exception {
         List<CoronaVirus> coronaViruses = List.of(
-                new CoronaVirus("estonia", 1L),
-                new CoronaVirus("Canada", 2L)
+//                new CoronaVirus("estonia", 1L),
+//                new CoronaVirus("Canada", 2L)
         );
         coronaVirusRepository.saveAll(coronaViruses);
 

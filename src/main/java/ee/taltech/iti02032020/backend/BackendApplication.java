@@ -12,6 +12,14 @@ public class BackendApplication {
 
 
 	public static void main(String[] args) throws IOException {
+		CoronaRequest coronaRequest = new CoronaRequest();
+//		coronaRequest.CoronaRequestCountry();
+		System.out.println(coronaRequest.CoronaRequestCountry("Estonia"));
+		coronaRequest.addRequestToDatabase(coronaRequest.CoronaRequestCountry("Estonia"), "Estonia");
+//		coronaRequest.addRequestToDatabase(coronaRequest.CoronaRequestCountry("Estonia"), "Estonia");
+//		coronaRequest.CoronaRequestCountry("Estonia");
+//		System.out.println(coronaRequest.anotherAPI());
+//		System.out.println(coronaRequest.getInfoFromResponse(coronaRequest.CoronaRequestCountry()));
 		SpringApplication.run(BackendApplication.class, args);
 	}
 

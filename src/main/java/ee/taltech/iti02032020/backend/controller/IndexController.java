@@ -1,7 +1,6 @@
 package ee.taltech.iti02032020.backend.controller;
 
 
-import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +21,11 @@ public class IndexController {
         return 123;
     }
 
-    //todo 1.2 create some endpoint to return some object
-    @GetMapping("hero")
-    public CoronaVirus someHero(){
-        return new CoronaVirus("Superman", 1L);
-    }
+//    //todo 1.2 create some endpoint to return some object
+//    @GetMapping("hero")
+//    public CoronaVirus someHero(){
+//        return new CoronaVirus("Superman", 1L);
+//    }
 
     //todo 1.3 create an endpoint "greeting", pass name to it to return "Hello <name>"
     @GetMapping("greeting")
