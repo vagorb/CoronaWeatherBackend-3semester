@@ -22,12 +22,11 @@ public class BackendApplicationInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         List<CoronaVirus> coronaViruses = List.of(
-//                new CoronaVirus("estonia", 1L),
-//                new CoronaVirus("Canada", 2L)
-                new CoronaVirus("hello"),
-                new CoronaVirus("vasja"),
-                new CoronaVirus("dimass"),
-                new CoronaVirus()
+                new CoronaVirus("countryName", "totalCases", "recoveredCases", "totalDeaths", "currentCases")
+//                new CoronaVirus("hello")
+//                new CoronaVirus("vasja"),
+//                new CoronaVirus("dimass"),
+//                new CoronaVirus()
         );
         coronaVirusRepository.saveAll(coronaViruses);
 //        request.WeatherRequestCity();

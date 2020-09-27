@@ -1,6 +1,8 @@
 package ee.taltech.iti02032020.backend.model;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Map;
 
 
 //@Entity
@@ -22,6 +25,7 @@ import javax.persistence.ManyToOne;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CoronaVirus {
 
     @Id
@@ -41,6 +45,15 @@ public class CoronaVirus {
         this.recoveredCases = recoveredCases;
         this.totalDeaths = totalDeaths;
         this.currentCases = currentCases;
+    }
+
+    public static CoronaVirus getCoronaVirusFromJson(String stringJson, String country) {
+        JsonObject json = new Gson().fromJson(stringJson, JsonObject.class);
+        String totalCases = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("total_cases").toString();
+        String totalRecovered =  json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("recovered").toString();
+        String totalDeaths = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("deaths").toString();
+        String currentCases = json.get("data").getAsJsonObject().get("change").getAsJsonObject().get("total_cases").toString();
+        return new CoronaVirus(country, totalCases, totalRecovered, totalDeaths, currentCases);
     }
 
 

@@ -23,7 +23,6 @@ public class CoronaRequest {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://coronavirus-map.p.rapidapi.com/v1/summary/region?region=china")
                 .url("https://coronavirus-map.p.rapidapi.com/v1/summary/region?region=" + country)
                 .get()
                 .addHeader("x-rapidapi-host", "coronavirus-map.p.rapidapi.com")
@@ -33,7 +32,7 @@ public class CoronaRequest {
         return client.newCall(request).execute().body().string();
     }
 
-    public CoronaVirus addRequestToDatabase(String string, String country) {
+//    public CoronaVirus addRequestToDatabase(String string, String country) {
         // country
         // infected right now (today)
         // infected overall (total cases)
@@ -43,19 +42,19 @@ public class CoronaRequest {
 //        Gson gson = new Gson();
 //         = gson.toJson(string);
 //         JSONObject jsonObject = parser.parse
-        JsonObject json = new Gson().fromJson(string, JsonObject.class);
-        System.out.println(country);
-        System.out.println(json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("total_cases"));
-        System.out.println(json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("recovered"));
-        System.out.println(json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("deaths"));
-        System.out.println(json.get("data").getAsJsonObject().get("change").getAsJsonObject().get("total_cases"));
-        String totalCases = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("total_cases").toString();
-        String totalRecovered = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("recovered").toString();
-        String totalDeaths = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("deaths").toString();
-        String currentCases = json.get("data").getAsJsonObject().get("change").getAsJsonObject().get("total_cases").toString();
-        CoronaVirus coronaVirus = new CoronaVirus(country, totalCases, totalRecovered, totalDeaths, currentCases);
-        return coronaVirus;
-    }
+//        JsonObject json = new Gson().fromJson(string, JsonObject.class);
+//        System.out.println(country);
+//        System.out.println(json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("total_cases"));
+//        System.out.println(json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("recovered"));
+//        System.out.println(json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("deaths"));
+//        System.out.println(json.get("data").getAsJsonObject().get("change").getAsJsonObject().get("total_cases"));
+//        String totalCases = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("total_cases").toString();
+//        String totalRecovered = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("recovered").toString();
+//        String totalDeaths = json.get("data").getAsJsonObject().get("summary").getAsJsonObject().get("deaths").toString();
+//        String currentCases = json.get("data").getAsJsonObject().get("change").getAsJsonObject().get("total_cases").toString();
+//        CoronaVirus coronaVirus = new CoronaVirus(country, totalCases, totalRecovered, totalDeaths, currentCases);
+//        return coronaVirus;
+//    }
 
 //    public void addToDataBase(Connection con, String dbName) throws SQLException {
 //        throw new SQLException() {
