@@ -23,9 +23,9 @@ public class CoronaVirusService {
                 .orElseThrow(CoronaVirusCountryNotFoundException::new);
     }
 
-    // Add exception messages !!!
+//     Add exception messages !!!
     public CoronaVirus save(CoronaVirus coronaVirus) {
-        if (coronaVirus.getCityName() == null) {
+        if (coronaVirus.getCountryName() == null) {
             throw new InvalidCoronaVirusCountryException();
         }
         if (coronaVirus.getId() != null){
@@ -36,11 +36,11 @@ public class CoronaVirusService {
     }
 
     public CoronaVirus update(CoronaVirus coronaVirus, Long id) {
-        if (coronaVirus.getCityName() == null) {
+        if (coronaVirus.getCountryName() == null) {
             throw new InvalidCoronaVirusCountryException();
         }
         CoronaVirus dbCoronaVirus = findById(id);
-        dbCoronaVirus.setCityName(coronaVirus.getCityName());
+        dbCoronaVirus.setCountryName(coronaVirus.getCountryName());
         // save works as update when id is present
         return coronaVirusRepository.save(dbCoronaVirus);
     }
