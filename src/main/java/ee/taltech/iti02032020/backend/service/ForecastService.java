@@ -31,6 +31,7 @@ public class ForecastService {
         if (forecast.getId() != null){
             throw new InvalidCoronaVirusCountryException();
         }
+
         // save will generate id for object
         return forecastRepository.save(forecast);
     }
@@ -41,7 +42,12 @@ public class ForecastService {
         }
         Forecast dbForecast = findById(id);
         dbForecast.setCountryName(forecast.getCountryName());
-        // save works as update when id is present
+        dbForecast.setCity(forecast.getCity());
+        dbForecast.setWeather(forecast.getWeather());
+        dbForecast.setTemperature(forecast.getTemperature());
+        dbForecast.setLon(forecast.getLon());
+        dbForecast.setLat(forecast.getLat());
+        dbForecast.setWind(forecast.getWind());
         return forecastRepository.save(dbForecast);
     }
 

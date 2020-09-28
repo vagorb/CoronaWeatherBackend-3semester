@@ -13,7 +13,7 @@ public class ForecastRequest {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=8a407506c2636871c9fafed41eb6889e"))
+                .url(("http://api.openweathermap.org/data/2.5/weather?q=" + city.toLowerCase() + "&units=metric&appid=8a407506c2636871c9fafed41eb6889e"))
                 .build();
 
 

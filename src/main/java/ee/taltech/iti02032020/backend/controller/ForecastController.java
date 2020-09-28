@@ -44,10 +44,21 @@ public class ForecastController {
     }
 
     @PostMapping
-    public void saveForecast(@RequestBody String city) throws IOException {
+    public Integer saveForecast(@RequestBody String city) throws IOException {
         String forecastInfo = forecastRequest.ForecastRequestCity(city);
         Forecast forecast = Forecast.getForecastFromJson(forecastInfo);
+        List<Forecast> listFromDatabase = forecastRepository.findAll();
+        int size = listFromDatabase.size();
+        if (size > 0) {
+            for (Forecast forecasts : listFromDatabase) {
+                if (forecasts.getCity().equals(forecast.getCity())) {
+                    forecastService.update(forecast, forecasts.getId());
+                    return 0;
+                }
+            }
+        }
         forecastRepository.save(forecast);
+        return 1;
     }
 
     @PutMapping("{id}")
