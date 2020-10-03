@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Map;
 
 
@@ -36,8 +38,6 @@ public class CoronaVirus {
     private String recoveredCases;
     private String totalDeaths;
     private String currentCases;
-//    @ManyToOne
-//    private Forecast forecast;
 
     public CoronaVirus(String countryName, String totalCases, String recoveredCases, String totalDeaths, String currentCases) {
         this.countryName = countryName;
@@ -55,6 +55,5 @@ public class CoronaVirus {
         String currentCases = json.get("data").getAsJsonObject().get("change").getAsJsonObject().get("total_cases").toString();
         return new CoronaVirus(country, totalCases, totalRecovered, totalDeaths, currentCases);
     }
-
 
 }

@@ -1,7 +1,7 @@
 package ee.taltech.iti02032020.backend.service;
 
-import ee.taltech.iti02032020.backend.exception.CoronaVirusCountryNotFoundException;
-import ee.taltech.iti02032020.backend.exception.InvalidCoronaVirusCountryException;
+import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
+import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
 import ee.taltech.iti02032020.backend.model.Forecast;
 import ee.taltech.iti02032020.backend.repository.ForecastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +20,24 @@ public class ForecastService {
 
     public Forecast findById(Long id) {
         return forecastRepository.findById(id)
-                .orElseThrow(CoronaVirusCountryNotFoundException::new);
+                .orElseThrow(CityNotFoundException::new);
     }
 
-    //     Add exception messages !!!
     public Forecast save(Forecast forecast) {
-        if (forecast.getCountryName() == null) {
-            throw new InvalidCoronaVirusCountryException();
+        if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
+                || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
+                || forecast.getWind() == null) {
+            throw new InvalidCountryException();
         }
         if (forecast.getId() != null){
-            throw new InvalidCoronaVirusCountryException();
+            throw new InvalidCountryException();
         }
-
-        // save will generate id for object
         return forecastRepository.save(forecast);
     }
 
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null) {
-            throw new InvalidCoronaVirusCountryException();
+            throw new InvalidCountryException();
         }
         Forecast dbForecast = findById(id);
         dbForecast.setCountryName(forecast.getCountryName());
@@ -55,4 +54,6 @@ public class ForecastService {
         Forecast dbForecast = findById(id);
         forecastRepository.delete(dbForecast);
     }
+
+
 }

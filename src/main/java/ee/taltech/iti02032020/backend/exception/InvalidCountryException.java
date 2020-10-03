@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidCoronaVirusCountryException extends RuntimeException{
+public class InvalidCountryException extends RuntimeException{
 
     // there could be some message here
 }

@@ -1,7 +1,7 @@
 package ee.taltech.iti02032020.backend.service;
 
-import ee.taltech.iti02032020.backend.exception.CoronaVirusCountryNotFoundException;
-import ee.taltech.iti02032020.backend.exception.InvalidCoronaVirusCountryException;
+import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
+import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +20,30 @@ public class CoronaVirusService {
 
     public CoronaVirus findById(Long id) {
         return coronaVirusRepository.findById(id)
-                .orElseThrow(CoronaVirusCountryNotFoundException::new);
+                .orElseThrow(CityNotFoundException::new);
     }
 
-//     Add exception messages !!!
+
     public CoronaVirus save(CoronaVirus coronaVirus) {
         if (coronaVirus.getCountryName() == null) {
-            throw new InvalidCoronaVirusCountryException();
+            throw new InvalidCountryException();
         }
         if (coronaVirus.getId() != null){
-            throw new InvalidCoronaVirusCountryException();
+            throw new InvalidCountryException();
         }
-        // save will generate id for object
         return coronaVirusRepository.save(coronaVirus);
     }
 
     public CoronaVirus update(CoronaVirus coronaVirus, Long id) {
         if (coronaVirus.getCountryName() == null) {
-            throw new InvalidCoronaVirusCountryException();
+            throw new InvalidCountryException();
         }
         CoronaVirus dbCoronaVirus = findById(id);
         dbCoronaVirus.setCountryName(coronaVirus.getCountryName());
-        // save works as update when id is present
+        dbCoronaVirus.setCurrentCases(coronaVirus.getCurrentCases());
+        dbCoronaVirus.setRecoveredCases(coronaVirus.getRecoveredCases());
+        dbCoronaVirus.setTotalCases(coronaVirus.getTotalCases());
+        dbCoronaVirus.setTotalDeaths(coronaVirus.getTotalDeaths());
         return coronaVirusRepository.save(dbCoronaVirus);
     }
 
@@ -49,5 +51,4 @@ public class CoronaVirusService {
         CoronaVirus dbCoronaVirus = findById(id);
         coronaVirusRepository.delete(dbCoronaVirus);
     }
-
 }

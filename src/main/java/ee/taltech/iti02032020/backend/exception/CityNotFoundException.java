@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class CoronaVirusCountryNotFoundException extends RuntimeException{
+public class CityNotFoundException extends RuntimeException{
 
-    // there could be some message here
+    public CityNotFoundException() {
+        super("City not found");
+        System.out.println("City not found");
+    }
 }

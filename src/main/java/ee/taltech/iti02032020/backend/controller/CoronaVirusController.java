@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -36,21 +35,17 @@ public class CoronaVirusController {
         return coronaViruses.findAll();
     }
 
-    @GetMapping("country/{country}")
-    public CoronaVirus getCoronaVirusByCountry(@PathVariable String country) throws IOException {
-        return CoronaVirus.getCoronaVirusFromJson(coronaRequest.CoronaRequestCountry(country), country);
-    }
-
     @GetMapping("{id}")
     public CoronaVirus getCoronaVirus(@PathVariable Long id) {
         return coronaViruses.findById(id);
     }
 
-    @PostMapping
-    public void saveCoronaVirus(@RequestBody String country) throws IOException {
+    @PostMapping("country/{country}")
+    public CoronaVirus saveCoronaVirus(@RequestBody String country) throws IOException {
         String coronaInfo = coronaRequest.CoronaRequestCountry(country);
         CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
         coronaVirusRepository.save(coronaVirus);
+        return coronaVirus;
     }
 
     @PutMapping("{id}")

@@ -20,11 +20,11 @@ public class ForecastRequest {
         return client.newCall(request).execute().body().string();
     }
 
-    public String ForecastRequestAll(Long lon, Long lat) throws IOException {
+    public String ForecastRequestAll(double lon, double lat) throws IOException {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric&appid=8a407506c2636871c9fafed41eb6889e")
+                .url("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=8a407506c2636871c9fafed41eb6889e")
                 .build();
 
 
