@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 @RequestMapping("Forecast")
 @RestController
+
 public class ForecastController {
     private ForecastRequest forecastRequest = new ForecastRequest();
 
@@ -76,25 +78,23 @@ public class ForecastController {
             CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, forecast.getCountryName());
             int size = listFromDatabase.size();
             if (size > 0) {
-                for (Forecast forecasts : listFromDatabase) {
-                    if (forecasts.getCity().equals(forecast.getCity())) {
-                        coronaViruses.update(coronaVirus, forecasts.getCoronaVirus().getId());
-                        forecastService.update(forecast, forecasts.getId());
-                        return forecast;
-                    }
-                }
-            }
-            List<CoronaVirus> listFromCoronaViruses = coronaVirusRepository.findAll();
-            for (CoronaVirus corona : listFromCoronaViruses) {
-                if (corona.getCountryName().equals(forecast.getCountryName())) {
-                    coronaViruses.update(coronaVirus, corona.getId());
-                    forecast.setCoronaVirus(coronaViruses.findById(corona.getId()));
-                    forecastService.save(forecast);
+                Optional<Forecast> forecastFromSet = listFromDatabase.parallelStream().filter(x -> x.getCity().equals(forecast.getCity())).findFirst();
+                if (forecastFromSet.isPresent()) {
+                    coronaViruses.update(coronaVirus, forecastFromSet.get().getCoronaVirus().getId());
+                    forecastService.update(forecast, forecastFromSet.get().getId());
                     return forecast;
                 }
             }
+            List<CoronaVirus> listFromCoronaViruses = coronaVirusRepository.findAll();
+            Optional<CoronaVirus> coronaFromSet = listFromCoronaViruses.parallelStream().filter(x -> x.getCountryName().equals(forecast.getCountryName())).findFirst();
+            if (coronaFromSet.isPresent()) {
+                    coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
+                    forecast.setCoronaVirus(coronaViruses.findById(coronaFromSet.get().getId()));
+                    forecastService.save(forecast);
+                    return forecast;
+            }
             coronaViruses.save(coronaVirus);
-            forecast.setCoronaVirus(coronaViruses.findById((long) size + listFromCoronaViruses.size()));
+            forecast.setCoronaVirus(coronaViruses.findById((long) size + listFromCoronaViruses.size() + 1));
             forecastService.save(forecast);
             return forecast;
         } else {

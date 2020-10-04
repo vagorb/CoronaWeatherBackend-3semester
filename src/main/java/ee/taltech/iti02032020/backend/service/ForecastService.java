@@ -47,6 +47,8 @@ public class ForecastService {
         dbForecast.setLon(forecast.getLon());
         dbForecast.setLat(forecast.getLat());
         dbForecast.setWind(forecast.getWind());
+        dbForecast.setHumidity(forecast.getHumidity());
+        dbForecast.setPressure(forecast.getPressure());
         return forecastRepository.save(dbForecast);
     }
 
