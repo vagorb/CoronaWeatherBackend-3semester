@@ -81,6 +81,7 @@ public class ForecastController {
                 Optional<Forecast> forecastFromSet = listFromDatabase.parallelStream().filter(x -> x.getCity().equals(forecast.getCity())).findFirst();
                 if (forecastFromSet.isPresent()) {
                     coronaViruses.update(coronaVirus, forecastFromSet.get().getCoronaVirus().getId());
+                    forecast.setSuggestion(Forecast.suggestion(forecast));
                     forecastService.update(forecast, forecastFromSet.get().getId());
                     return forecast;
                 }
@@ -90,11 +91,13 @@ public class ForecastController {
             if (coronaFromSet.isPresent()) {
                     coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
                     forecast.setCoronaVirus(coronaViruses.findById(coronaFromSet.get().getId()));
+                    forecast.setSuggestion(Forecast.suggestion(forecast));
                     forecastService.save(forecast);
                     return forecast;
             }
             coronaViruses.save(coronaVirus);
             forecast.setCoronaVirus(coronaViruses.findById((long) size + listFromCoronaViruses.size() + 1));
+            forecast.setSuggestion(Forecast.suggestion(forecast));
             forecastService.save(forecast);
             return forecast;
         } else {
