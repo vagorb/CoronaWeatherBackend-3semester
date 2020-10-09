@@ -2,6 +2,7 @@ package ee.taltech.iti02032020.backend.service;
 
 import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
 import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
+import ee.taltech.iti02032020.backend.exception.PropertyNotFoundException;
 import ee.taltech.iti02032020.backend.model.Forecast;
 import ee.taltech.iti02032020.backend.repository.ForecastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +21,26 @@ public class ForecastService {
 
     public Forecast findById(Long id) {
         return forecastRepository.findById(id)
-                .orElseThrow(CityNotFoundException::new);
+                .orElseThrow(PropertyNotFoundException::new);
     }
 
     public Forecast save(Forecast forecast) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
                 || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
                 || forecast.getWind() == null) {
-            throw new InvalidCountryException();
+            throw new PropertyNotFoundException();
         }
         if (forecast.getId() != null){
-            throw new InvalidCountryException();
+            throw new PropertyNotFoundException();
         }
         return forecastRepository.save(forecast);
     }
 
     public Forecast update(Forecast forecast, Long id) {
-        if (forecast.getCountryName() == null) {
-            throw new InvalidCountryException();
+        if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
+                || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
+                || forecast.getWind() == null) {
+            throw new PropertyNotFoundException();
         }
         Forecast dbForecast = findById(id);
         dbForecast.setCountryName(forecast.getCountryName());

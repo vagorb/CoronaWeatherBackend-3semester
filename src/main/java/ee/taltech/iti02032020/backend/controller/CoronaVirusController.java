@@ -1,6 +1,9 @@
 package ee.taltech.iti02032020.backend.controller;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
 import ee.taltech.iti02032020.backend.request.CoronaRequest;
@@ -43,14 +46,20 @@ public class CoronaVirusController {
     @PostMapping("country/{country}")
     public CoronaVirus saveCoronaVirus(@RequestBody String country) throws IOException {
         String coronaInfo = coronaRequest.CoronaRequestCountry(country);
-        CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
-        coronaVirusRepository.save(coronaVirus);
-        return coronaVirus;
+        JsonObject json = new Gson().fromJson(coronaInfo, JsonObject.class);
+        int status = json.get("status").getAsInt();
+        if (status == 200) {
+            CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
+            coronaVirusRepository.save(coronaVirus);
+            return coronaVirus;
+        } else {
+            throw new InvalidCountryException();
+        }
     }
 
     @PutMapping("{id}")
-    public CoronaVirus updateCoronaVirus(@RequestBody CoronaVirus hero, @PathVariable Long id) {
-        return coronaViruses.update(hero, id);
+    public CoronaVirus updateCoronaVirus(@RequestBody CoronaVirus coronaVirus, @PathVariable Long id) {
+        return coronaViruses.update(coronaVirus, id);
     }
 
     @DeleteMapping("{id}")
