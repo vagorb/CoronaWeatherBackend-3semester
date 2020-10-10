@@ -16,6 +16,7 @@ import java.util.List;
 
 @Service
 public class CoronaVirusService {
+
     @Autowired
     private CoronaVirusRepository coronaVirusRepository;
 

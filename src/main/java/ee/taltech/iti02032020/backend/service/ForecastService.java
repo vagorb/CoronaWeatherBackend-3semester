@@ -3,11 +3,9 @@ package ee.taltech.iti02032020.backend.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
-import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
 import ee.taltech.iti02032020.backend.exception.PropertyNotFoundException;
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.model.Forecast;
-import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
 import ee.taltech.iti02032020.backend.repository.ForecastRepository;
 import ee.taltech.iti02032020.backend.request.CoronaRequest;
 import ee.taltech.iti02032020.backend.request.ForecastRequest;
@@ -22,9 +20,6 @@ import java.util.Optional;
 public class ForecastService {
 
     private ForecastRequest forecastRequest = new ForecastRequest();
-
-    @Autowired
-    private CoronaVirusRepository coronaVirusRepository;
 
     @Autowired
     private CoronaVirusService coronaViruses;
@@ -97,7 +92,7 @@ public class ForecastService {
                     return forecast;
                 }
             }
-            List<CoronaVirus> listFromCoronaViruses = coronaVirusRepository.findAll();
+            List<CoronaVirus> listFromCoronaViruses = coronaViruses.findAll();
             Optional<CoronaVirus> coronaFromSet = listFromCoronaViruses.parallelStream().filter(x -> x.getCountryName().equals(forecast.getCountryName())).findFirst();
             if (coronaFromSet.isPresent()) {
                 coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
