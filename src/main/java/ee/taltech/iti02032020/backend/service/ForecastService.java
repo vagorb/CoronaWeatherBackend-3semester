@@ -1,16 +1,33 @@
 package ee.taltech.iti02032020.backend.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
 import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
 import ee.taltech.iti02032020.backend.exception.PropertyNotFoundException;
+import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.model.Forecast;
+import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
 import ee.taltech.iti02032020.backend.repository.ForecastRepository;
+import ee.taltech.iti02032020.backend.request.CoronaRequest;
+import ee.taltech.iti02032020.backend.request.ForecastRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ForecastService {
+
+    private ForecastRequest forecastRequest = new ForecastRequest();
+
+    @Autowired
+    private CoronaVirusRepository coronaVirusRepository;
+
+    @Autowired
+    private CoronaVirusService coronaViruses;
 
     @Autowired
     private ForecastRepository forecastRepository;
@@ -58,6 +75,45 @@ public class ForecastService {
     public void delete(Long id) {
         Forecast dbForecast = findById(id);
         forecastRepository.delete(dbForecast);
+    }
+
+    public Forecast getForecastByCity(String city) throws IOException {
+        String forecastInfo = forecastRequest.ForecastRequestCity(city);
+        JsonObject json = new Gson().fromJson(forecastInfo, JsonObject.class);
+        int cod = json.get("cod").getAsInt();
+        if (cod == 200) {
+            Forecast forecast = Forecast.getForecastFromJson(forecastInfo);
+            List<Forecast> listFromDatabase = forecastRepository.findAll();
+            CoronaRequest coronaRequest = new CoronaRequest();
+            String coronaInfo = coronaRequest.CoronaRequestCountry(forecast.getCountryName());
+            CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, forecast.getCountryName());
+            int size = listFromDatabase.size();
+            if (size > 0) {
+                Optional<Forecast> forecastFromSet = listFromDatabase.parallelStream().filter(x -> x.getCity().equals(forecast.getCity())).findFirst();
+                if (forecastFromSet.isPresent()) {
+                    coronaViruses.update(coronaVirus, forecastFromSet.get().getCoronaVirus().getId());
+                    forecast.setSuggestion(Forecast.suggestion(forecast));
+                    ForecastService.this.update(forecast, forecastFromSet.get().getId());
+                    return forecast;
+                }
+            }
+            List<CoronaVirus> listFromCoronaViruses = coronaVirusRepository.findAll();
+            Optional<CoronaVirus> coronaFromSet = listFromCoronaViruses.parallelStream().filter(x -> x.getCountryName().equals(forecast.getCountryName())).findFirst();
+            if (coronaFromSet.isPresent()) {
+                coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
+                forecast.setCoronaVirus(coronaViruses.findById(coronaFromSet.get().getId()));
+                forecast.setSuggestion(Forecast.suggestion(forecast));
+                ForecastService.this.save(forecast);
+                return forecast;
+            }
+            coronaViruses.save(coronaVirus);
+            forecast.setCoronaVirus(coronaViruses.findById((long) size + listFromCoronaViruses.size() + 1));
+            forecast.setSuggestion(Forecast.suggestion(forecast));
+            ForecastService.this.save(forecast);
+            return forecast;
+        } else {
+            throw new CityNotFoundException();
+        }
     }
 
 

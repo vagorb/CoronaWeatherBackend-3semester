@@ -2,21 +2,25 @@ package ee.taltech.iti02032020.backend;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import ee.taltech.iti02032020.backend.controller.ForecastController;
 import ee.taltech.iti02032020.backend.model.DailyForecast;
 import ee.taltech.iti02032020.backend.request.ForecastRequest;
+import ee.taltech.iti02032020.backend.service.ForecastService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.io.IOException;
 import java.util.Locale;
 
 @SpringBootApplication
 public class BackendApplication {
-
+	@Autowired
+	private ForecastService forecastService;
 
 	public static void main(String[] args) throws IOException {
 		Locale loc = new Locale("en");
 		java.util.Locale.setDefault(loc);
+
 //		ForecastRequest forecastRequest = new ForecastRequest();
 //		String info = forecastRequest.ForecastRequestAll(13.41, 52.52);
 //		System.out.println(DailyForecast.getForecastFromJsonWeek(info));

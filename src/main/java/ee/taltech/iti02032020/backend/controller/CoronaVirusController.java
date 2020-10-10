@@ -1,14 +1,8 @@
 package ee.taltech.iti02032020.backend.controller;
-
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import ee.taltech.iti02032020.backend.exception.InvalidCountryException;
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
-import ee.taltech.iti02032020.backend.repository.CoronaVirusRepository;
-import ee.taltech.iti02032020.backend.request.CoronaRequest;
 import ee.taltech.iti02032020.backend.service.CoronaVirusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +17,8 @@ import java.util.List;
 
 @RequestMapping("coronaViruses")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CoronaVirusController {
-
-    private CoronaRequest coronaRequest = new CoronaRequest();
-
-    @Autowired
-    private CoronaVirusRepository coronaVirusRepository;
 
     @Autowired
     private CoronaVirusService coronaViruses;
@@ -43,18 +33,9 @@ public class CoronaVirusController {
         return coronaViruses.findById(id);
     }
 
-    @PostMapping("country/{country}")
-    public CoronaVirus saveCoronaVirus(@RequestBody String country) throws IOException {
-        String coronaInfo = coronaRequest.CoronaRequestCountry(country);
-        JsonObject json = new Gson().fromJson(coronaInfo, JsonObject.class);
-        int status = json.get("status").getAsInt();
-        if (status == 200) {
-            CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
-            coronaVirusRepository.save(coronaVirus);
-            return coronaVirus;
-        } else {
-            throw new InvalidCountryException();
-        }
+    @PostMapping
+    public CoronaVirus saveCoronaVirus(@RequestBody CoronaVirus coronaVirus) {
+        return coronaViruses.save(coronaVirus);
     }
 
     @PutMapping("{id}")
@@ -63,7 +44,14 @@ public class CoronaVirusController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteCoronaViruse(@PathVariable Long id) {
+    public void deleteCoronaVirus(@PathVariable Long id) {
         coronaViruses.delete(id);
     }
+
+    @GetMapping("country/{country}")
+    public CoronaVirus getCoronaVirus(@PathVariable String country) throws IOException {
+        return coronaViruses.getCoronaVirus(country);
+    }
+
+
 }
