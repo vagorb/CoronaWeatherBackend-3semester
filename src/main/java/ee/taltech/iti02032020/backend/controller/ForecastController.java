@@ -1,4 +1,5 @@
 package ee.taltech.iti02032020.backend.controller;
+import ee.taltech.iti02032020.backend.model.DailyForecast;
 import ee.taltech.iti02032020.backend.model.Forecast;
 import ee.taltech.iti02032020.backend.service.ForecastService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class ForecastController {
     @GetMapping("city/{city}")
     public Forecast getForecastByCity(@PathVariable String city) throws IOException {
         return forecastService.getForecastByCity(city);
+    }
+
+    @GetMapping("lat/{lat}/lon/{lon}")
+    public List<DailyForecast> getForecastFiveDays(@PathVariable String lat, @PathVariable String lon) throws IOException {
+        return forecastService.getForecastFiveDays(lon, lat);
     }
 }

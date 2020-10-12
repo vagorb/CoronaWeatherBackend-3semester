@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
 import ee.taltech.iti02032020.backend.exception.PropertyNotFoundException;
 import ee.taltech.iti02032020.backend.model.CoronaVirus;
+import ee.taltech.iti02032020.backend.model.DailyForecast;
 import ee.taltech.iti02032020.backend.model.Forecast;
 import ee.taltech.iti02032020.backend.repository.ForecastRepository;
 import ee.taltech.iti02032020.backend.request.CoronaRequest;
@@ -108,6 +109,15 @@ public class ForecastService {
             return forecast;
         } else {
             throw new CityNotFoundException();
+        }
+    }
+
+    public List<DailyForecast> getForecastFiveDays(String lon, String lat) throws IOException {
+        if (lat != null && lon != null) {
+            String forecastInfo = forecastRequest.ForecastRequestAll(Double.parseDouble(lon), Double.parseDouble(lat));
+            return DailyForecast.getForecastFromJsonWeek(forecastInfo);
+        } else {
+            throw new PropertyNotFoundException();
         }
     }
 
