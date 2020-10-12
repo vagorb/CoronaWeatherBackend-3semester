@@ -89,8 +89,7 @@ public class ForecastService {
                 if (forecastFromSet.isPresent()) {
                     coronaViruses.update(coronaVirus, forecastFromSet.get().getCoronaVirus().getId());
                     forecast.setSuggestion(Forecast.suggestion(forecast));
-                    ForecastService.this.update(forecast, forecastFromSet.get().getId());
-                    return forecast;
+                    return this.update(forecast, forecastFromSet.get().getId());
                 }
             }
             List<CoronaVirus> listFromCoronaViruses = coronaViruses.findAll();
