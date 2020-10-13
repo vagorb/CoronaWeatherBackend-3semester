@@ -22,10 +22,10 @@ public class ForecastController {
     @Autowired
     private ForecastService forecastService;
 
-    @GetMapping
-    public List<Forecast> getForecasts() {
-        return forecastService.findAll();
-    }
+//    @GetMapping
+//    public List<Forecast> getForecasts() {
+//        return forecastService.findAll();
+//    }
 
     @GetMapping("{id}")
     public Forecast getForecast(@PathVariable Long id) {
@@ -56,4 +56,10 @@ public class ForecastController {
     public List<DailyForecast> getForecastFiveDays(@PathVariable String lat, @PathVariable String lon) throws IOException {
         return forecastService.getForecastFiveDays(lon, lat);
     }
+
+    @GetMapping
+    public List<String> getTopFive() {
+        return forecastService.topFiveSearches();
+    }
+
 }

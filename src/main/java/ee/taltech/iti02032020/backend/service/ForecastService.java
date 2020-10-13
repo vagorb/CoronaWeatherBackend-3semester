@@ -8,14 +8,16 @@ import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.model.DailyForecast;
 import ee.taltech.iti02032020.backend.model.Forecast;
 import ee.taltech.iti02032020.backend.repository.ForecastRepository;
-import ee.taltech.iti02032020.backend.request.CoronaRequest;
 import ee.taltech.iti02032020.backend.request.ForecastRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ForecastService {
@@ -27,10 +29,10 @@ public class ForecastService {
 
     @Autowired
     private ForecastRepository forecastRepository;
-
-    public List<Forecast> findAll() {
-        return forecastRepository.findAll();
-    }
+//
+//    public List<Forecast> findAll() {
+//        return forecastRepository.findAll();
+//    }
 
     public Forecast findById(Long id) {
         return forecastRepository.findById(id)
@@ -65,6 +67,7 @@ public class ForecastService {
         dbForecast.setWind(forecast.getWind());
         dbForecast.setHumidity(forecast.getHumidity());
         dbForecast.setPressure(forecast.getPressure());
+        dbForecast.setNumOfSearches(dbForecast.getNumOfSearches() + 1);
         return forecastRepository.save(dbForecast);
     }
 
@@ -80,9 +83,7 @@ public class ForecastService {
         if (cod == 200) {
             Forecast forecast = Forecast.getForecastFromJson(forecastInfo);
             List<Forecast> listFromDatabase = forecastRepository.findAll();
-            CoronaRequest coronaRequest = new CoronaRequest();
-            String coronaInfo = coronaRequest.CoronaRequestCountry(forecast.getCountryName());
-            CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, forecast.getCountryName());
+            CoronaVirus coronaVirus = coronaViruses.getCoronaVirus(forecast.getCountryName());
             int size = listFromDatabase.size();
             if (size > 0) {
                 Optional<Forecast> forecastFromSet = listFromDatabase.parallelStream().filter(x -> x.getCity().equals(forecast.getCity())).findFirst();
@@ -98,16 +99,18 @@ public class ForecastService {
                 coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
                 forecast.setCoronaVirus(coronaViruses.findById(coronaFromSet.get().getId()));
                 forecast.setSuggestion(Forecast.suggestion(forecast));
+                forecast.setNumOfSearches(1);
                 ForecastService.this.save(forecast);
                 return forecast;
             }
             coronaViruses.save(coronaVirus);
             forecast.setCoronaVirus(coronaViruses.findById((long) size + listFromCoronaViruses.size() + 1));
             forecast.setSuggestion(Forecast.suggestion(forecast));
+            forecast.setNumOfSearches(1);
             ForecastService.this.save(forecast);
             return forecast;
         } else {
-            throw new CityNotFoundException();
+            return ForecastService.this.forecastFromDatabase(city);
         }
     }
 
@@ -120,5 +123,29 @@ public class ForecastService {
         }
     }
 
+    public List<String> topFiveSearches() {
+        List<String> topFive = new ArrayList<>();
+        List<Forecast> top = forecastRepository.findAll().stream().sorted(Comparator.comparingInt(Forecast::getNumOfSearches).reversed()).collect(Collectors.toList());
+        if (top.size() > 5) {
+            for (int i = 0; i < 5; i++) {
+                topFive.add(top.get(i).getCity());
+            }
+        } else if (top.size() > 0){
+            for (Forecast forecast : top) {
+                topFive.add(forecast.getCity());
+            }
+        }
+        return topFive;
+    }
+
+    public Forecast forecastFromDatabase(String city) {
+        Optional<Forecast> forecast = forecastRepository.findAll().stream().filter(x -> x.getCity().equalsIgnoreCase(city.toUpperCase())).findFirst();
+        if (forecast.isPresent()) {
+            forecast.get().setUpToDate("False");
+            return forecast.get();
+        } else {
+            throw new CityNotFoundException();
+        }
+    }
 
 }

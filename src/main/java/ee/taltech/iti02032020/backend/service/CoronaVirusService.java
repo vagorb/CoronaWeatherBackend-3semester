@@ -66,11 +66,11 @@ public class CoronaVirusService {
         JsonObject json = new Gson().fromJson(coronaInfo, JsonObject.class);
         int status = json.get("status").getAsInt();
         if (status == 200) {
-            CoronaVirus coronaVirus = CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
-            coronaVirusRepository.save(coronaVirus);
-            return coronaVirus;
+            return CoronaVirus.getCoronaVirusFromJson(coronaInfo, country);
         } else {
             throw new InvalidCountryException();
         }
     }
+
+
 }

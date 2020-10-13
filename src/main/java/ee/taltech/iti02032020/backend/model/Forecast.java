@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +30,8 @@ public class Forecast {
     private String pressure;
     private String humidity;
     private String suggestion;
+    private Integer numOfSearches;
+    private String upToDate;
     @ManyToOne
     CoronaVirus coronaVirus;
 

@@ -2,7 +2,7 @@ package a_theory.question5;
 
 public class ApplicationLayers {
 
-    
+
     //todo
     // Architects insist on having layered architecture in the back-end... ¯\_(ツ)_/¯
 

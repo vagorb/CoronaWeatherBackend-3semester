@@ -42,10 +42,10 @@ public class DailyForecast {
     public static List<DailyForecast> getForecastFromJsonWeek(String stringJson) {
         ArrayList<DailyForecast> week = new ArrayList<>();
         JsonObject json = new Gson().fromJson(stringJson, JsonObject.class);
-        for (int i = 1; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             String day = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("temp").getAsJsonObject().get("day").toString();
             String night = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("temp").getAsJsonObject().get("night").toString();
-            String weather = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("weather").getAsJsonArray().get(0).getAsJsonObject().get("main").toString();
+            String weather = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("weather").getAsJsonArray().get(0).getAsJsonObject().get("main").toString().replace("\"", "");
             String pressure = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("pressure").toString();
             String humidity = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("humidity").toString();
             String wind = json.get("daily").getAsJsonArray().get(i).getAsJsonObject().get("wind_speed").toString();
