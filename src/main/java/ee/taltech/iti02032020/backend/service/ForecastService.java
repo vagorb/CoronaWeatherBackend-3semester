@@ -56,8 +56,7 @@ public class ForecastService {
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
                 || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
-                || forecast.getWind() == null || forecast.getPressure() == null || forecast.getHumidity() == null
-                || forecast.getSuggestion() == null || forecast.getNumOfSearches() == null) {
+                || forecast.getWind() == null || forecast.getPressure() == null || forecast.getHumidity() == null) {
             throw new PropertyNotFoundException();
         }
         Forecast dbForecast = findById(id);
