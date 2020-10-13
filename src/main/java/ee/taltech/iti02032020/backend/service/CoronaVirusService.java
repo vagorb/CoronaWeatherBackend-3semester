@@ -34,7 +34,8 @@ public class CoronaVirusService {
 
     public CoronaVirus save(CoronaVirus coronaVirus) {
         if (coronaVirus.getCountryName() == null || coronaVirus.getCurrentCases() == null
-                || coronaVirus.getRecoveredCases() == null || coronaVirus.getTotalCases() == null) {
+                || coronaVirus.getRecoveredCases() == null || coronaVirus.getTotalCases() == null
+                || coronaVirus.getTotalDeaths() == null) {
             throw new PropertyNotFoundException();
         }
         if (coronaVirus.getId() != null){
@@ -44,7 +45,9 @@ public class CoronaVirusService {
     }
 
     public CoronaVirus update(CoronaVirus coronaVirus, Long id) {
-        if (coronaVirus.getCountryName() == null) {
+        if (coronaVirus.getCountryName() == null || coronaVirus.getCurrentCases() == null
+                || coronaVirus.getRecoveredCases() == null || coronaVirus.getTotalCases() == null
+                || coronaVirus.getTotalDeaths() == null) {
             throw new InvalidCountryException();
         }
         CoronaVirus dbCoronaVirus = findById(id);

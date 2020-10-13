@@ -39,10 +39,12 @@ public class ForecastService {
                 .orElseThrow(PropertyNotFoundException::new);
     }
 
+
     public Forecast save(Forecast forecast) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
                 || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
-                || forecast.getWind() == null) {
+                || forecast.getWind() == null || forecast.getPressure() == null || forecast.getHumidity() == null
+                || forecast.getSuggestion() == null || forecast.getNumOfSearches() == null) {
             throw new PropertyNotFoundException();
         }
         if (forecast.getId() != null){
@@ -54,7 +56,8 @@ public class ForecastService {
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
                 || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
-                || forecast.getWind() == null) {
+                || forecast.getWind() == null || forecast.getPressure() == null || forecast.getHumidity() == null
+                || forecast.getSuggestion() == null || forecast.getNumOfSearches() == null) {
             throw new PropertyNotFoundException();
         }
         Forecast dbForecast = findById(id);
@@ -67,6 +70,7 @@ public class ForecastService {
         dbForecast.setWind(forecast.getWind());
         dbForecast.setHumidity(forecast.getHumidity());
         dbForecast.setPressure(forecast.getPressure());
+        dbForecast.setSuggestion(forecast.getSuggestion());
         dbForecast.setNumOfSearches(dbForecast.getNumOfSearches() + 1);
         return forecastRepository.save(dbForecast);
     }
