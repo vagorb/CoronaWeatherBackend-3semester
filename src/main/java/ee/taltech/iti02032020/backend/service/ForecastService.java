@@ -29,28 +29,38 @@ public class ForecastService {
 
     @Autowired
     private ForecastRepository forecastRepository;
-//
-//    public List<Forecast> findAll() {
-//        return forecastRepository.findAll();
-//    }
 
     public Forecast findById(Long id) {
         return forecastRepository.findById(id)
                 .orElseThrow(PropertyNotFoundException::new);
     }
 
-
-    public Forecast save(Forecast forecast) {
+    public void save(Forecast forecast) throws IOException {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
-                || forecast.getLon() == null || forecast.getTemperature() == null || forecast.getWeather() == null
-                || forecast.getWind() == null || forecast.getPressure() == null || forecast.getHumidity() == null
-                || forecast.getSuggestion() == null || forecast.getNumOfSearches() == null) {
+                || forecast.getLon() == null) {
             throw new PropertyNotFoundException();
         }
         if (forecast.getId() != null){
             throw new PropertyNotFoundException();
         }
-        return forecastRepository.save(forecast);
+        String forecastInfo = forecastRequest.ForecastRequestCity(forecast.getCity());
+        JsonObject json = new Gson().fromJson(forecastInfo, JsonObject.class);
+        int cod = json.get("cod").getAsInt();
+        if (cod != 200) {
+            CoronaVirus coronaVirus = coronaViruses.getCoronaVirus(forecast.getCountryName());
+            Optional<CoronaVirus> coronaFromSet = ForecastService.this.checkCoronaInDatabase(forecast);
+            if (coronaFromSet.isPresent()) {
+                coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
+                forecast.setCoronaVirus(coronaFromSet.get());
+            } else {
+                coronaViruses.save(coronaVirus);
+                forecast.setCoronaVirus(coronaVirus);
+            }
+            forecast.setNumOfSearches(1);
+            forecastRepository.save(forecast);
+        } else {
+            throw new CityNotFoundException();
+        }
     }
 
     public Forecast update(Forecast forecast, Long id) {
@@ -96,25 +106,29 @@ public class ForecastService {
                     return this.update(forecast, forecastFromSet.get().getId());
                 }
             }
-            List<CoronaVirus> listFromCoronaViruses = coronaViruses.findAll();
-            Optional<CoronaVirus> coronaFromSet = listFromCoronaViruses.parallelStream().filter(x -> x.getCountryName().equals(forecast.getCountryName())).findFirst();
+            Optional<CoronaVirus> coronaFromSet = ForecastService.this.checkCoronaInDatabase(forecast);
             if (coronaFromSet.isPresent()) {
                 coronaViruses.update(coronaVirus, coronaFromSet.get().getId());
                 forecast.setCoronaVirus(coronaViruses.findById(coronaFromSet.get().getId()));
                 forecast.setSuggestion(Forecast.suggestion(forecast));
                 forecast.setNumOfSearches(1);
-                ForecastService.this.save(forecast);
+                forecastRepository.save(forecast);
                 return forecast;
             }
             coronaViruses.save(coronaVirus);
-            forecast.setCoronaVirus(coronaViruses.findById((long) size + listFromCoronaViruses.size() + 1));
+            forecast.setCoronaVirus(coronaVirus);
             forecast.setSuggestion(Forecast.suggestion(forecast));
             forecast.setNumOfSearches(1);
-            ForecastService.this.save(forecast);
+            forecastRepository.save(forecast);
             return forecast;
         } else {
             return ForecastService.this.forecastFromDatabase(city);
         }
+    }
+
+    public Optional<CoronaVirus> checkCoronaInDatabase(Forecast forecast) {
+        List<CoronaVirus> listFromCoronaViruses = coronaViruses.findAll();
+        return listFromCoronaViruses.parallelStream().filter(x -> x.getCountryName().equalsIgnoreCase(forecast.getCountryName())).findFirst();
     }
 
     public List<DailyForecast> getForecastFiveDays(String lon, String lat) throws IOException {
@@ -144,11 +158,11 @@ public class ForecastService {
     public Forecast forecastFromDatabase(String city) {
         Optional<Forecast> forecast = forecastRepository.findAll().stream().filter(x -> x.getCity().equalsIgnoreCase(city.toUpperCase())).findFirst();
         if (forecast.isPresent()) {
-            forecast.get().setUpToDate("False");
+            forecast.get().setNumOfSearches(forecast.get().getNumOfSearches() + 1);
+            forecastRepository.save(forecast.get());
             return forecast.get();
-        } else {
-            throw new CityNotFoundException();
         }
+        return null;
     }
 
 }

@@ -31,7 +31,6 @@ public class Forecast {
     private String humidity;
     private String suggestion;
     private Integer numOfSearches;
-    private String upToDate;
     @ManyToOne
     CoronaVirus coronaVirus;
 

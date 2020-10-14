@@ -22,18 +22,13 @@ public class ForecastController {
     @Autowired
     private ForecastService forecastService;
 
-//    @GetMapping
-//    public List<Forecast> getForecasts() {
-//        return forecastService.findAll();
-//    }
-
     @GetMapping("{id}")
     public Forecast getForecast(@PathVariable Long id) {
         return forecastService.findById(id);
     }
 
     @PostMapping
-    public void saveForecast(@RequestBody Forecast forecast) {
+    public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
     }
 
