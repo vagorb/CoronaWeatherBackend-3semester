@@ -63,6 +63,7 @@ public class ForecastService {
         }
     }
 
+    
 
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
