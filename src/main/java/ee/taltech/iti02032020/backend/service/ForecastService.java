@@ -62,7 +62,7 @@ public class ForecastService {
             throw new CityNotFoundException();
         }
     }
-    
+
 
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
