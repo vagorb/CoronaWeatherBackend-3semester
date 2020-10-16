@@ -69,4 +69,21 @@ class ForecastControllerTest {
         assertEquals(HttpStatus.OK, exchange.getStatusCode());
         return exchange.getBody();
     }
+
+    @Test
+    @Transactional
+    void getTopFive() {
+        Forecast forecast1 = new Forecast("Estonia", "CityDoNotExistInDatabase1",null, null, "45", "45", null, null, null);
+        Forecast forecast2 = new Forecast("Estonia", "CityDoNotExistInDatabase2",null, null, "45", "45", null, null, null);
+        Forecast forecast4 = new Forecast("Estonia", "CityDoNotExistInDatabase4",null, null, "45", "45", null, null, null);
+        testRestTemplate.exchange("/Forecast", HttpMethod.POST, new HttpEntity<>(forecast1), Forecast.class);
+        testRestTemplate.exchange("/Forecast", HttpMethod.POST, new HttpEntity<>(forecast2), Forecast.class);
+        testRestTemplate.exchange("/Forecast", HttpMethod.POST, new HttpEntity<>(forecast4), Forecast.class);
+        testRestTemplate.exchange("/Forecast/city/CityDoNotExistInDatabase4", HttpMethod.GET, null, Forecast.class);
+        testRestTemplate.exchange("/Forecast/city/CityDoNotExistInDatabase4", HttpMethod.GET, null, Forecast.class);
+        ResponseEntity<List<String>> exchange = testRestTemplate.exchange("/Forecast",
+                HttpMethod.GET, null, LIST_OF_FORECASTS);
+        List<String> cities = assertOk(exchange);
+        assertEquals("CityDoNotExistInDatabase4", cities.get(0));
+    }
 }
