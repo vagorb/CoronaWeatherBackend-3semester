@@ -59,10 +59,6 @@ public class CoronaVirusService {
         return coronaVirusRepository.save(dbCoronaVirus);
     }
 
-    public void delete(Long id) {
-        CoronaVirus dbCoronaVirus = findById(id);
-        coronaVirusRepository.delete(dbCoronaVirus);
-    }
 
     public CoronaVirus getCoronaVirus(String country) throws IOException {
         String coronaInfo = coronaRequest.CoronaRequestCountry(country);
@@ -74,6 +70,5 @@ public class CoronaVirusService {
             throw new InvalidCountryException();
         }
     }
-
 
 }

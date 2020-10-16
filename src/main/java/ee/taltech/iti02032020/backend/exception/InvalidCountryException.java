@@ -6,5 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidCountryException extends RuntimeException{
 
-    // there could be some message here
+    public InvalidCountryException() {
+        super("Invalid Country");
+    }
+
+
 }

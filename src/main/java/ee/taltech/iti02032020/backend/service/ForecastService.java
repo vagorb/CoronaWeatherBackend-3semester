@@ -11,7 +11,6 @@ import ee.taltech.iti02032020.backend.repository.ForecastRepository;
 import ee.taltech.iti02032020.backend.request.ForecastRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,7 +45,7 @@ public class ForecastService {
         String forecastInfo = forecastRequest.ForecastRequestCity(forecast.getCity());
         JsonObject json = new Gson().fromJson(forecastInfo, JsonObject.class);
         int cod = json.get("cod").getAsInt();
-        if (cod != 200) {
+        if (cod != 200 && forecastRepository.findAll().stream().filter(x -> x.getCity().equalsIgnoreCase(forecast.getCity().toUpperCase())).findFirst().isEmpty()) {
             CoronaVirus coronaVirus = coronaViruses.getCoronaVirus(forecast.getCountryName());
             Optional<CoronaVirus> coronaFromSet = ForecastService.this.checkCoronaInDatabase(forecast);
             if (coronaFromSet.isPresent()) {
@@ -63,7 +62,7 @@ public class ForecastService {
         }
     }
 
-    
+
 
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
@@ -97,6 +96,7 @@ public class ForecastService {
         int cod = json.get("cod").getAsInt();
         if (cod == 200) {
             Forecast forecast = Forecast.getForecastFromJson(forecastInfo);
+            System.out.println(forecast);
             List<Forecast> listFromDatabase = forecastRepository.findAll();
             CoronaVirus coronaVirus = coronaViruses.getCoronaVirus(forecast.getCountryName());
             int size = listFromDatabase.size();
@@ -105,7 +105,7 @@ public class ForecastService {
                 if (forecastFromSet.isPresent()) {
                     coronaViruses.update(coronaVirus, forecastFromSet.get().getCoronaVirus().getId());
                     forecast.setSuggestion(ForecastService.suggestion(forecast));
-                    return this.update(forecast, forecastFromSet.get().getId());
+                    return ForecastService.this.update(forecast, forecastFromSet.get().getId());
                 }
             }
             Optional<CoronaVirus> coronaFromSet = ForecastService.this.checkCoronaInDatabase(forecast);
