@@ -8,7 +8,7 @@ public class Compilation {
     //todo p1
     // In your words (do not use wiki definitions)
     // What is compilation?
-    // Answer: Code transformation to machine code or language, what is similar to it.
+    // Answer: Code transformation to machine code or language, that is similar to it.
 
     //todo p2
     // Name 2 benefits of compilation?

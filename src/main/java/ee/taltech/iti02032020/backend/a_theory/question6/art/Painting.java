@@ -1,5 +1,9 @@
 package ee.taltech.iti02032020.backend.a_theory.question6.art;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

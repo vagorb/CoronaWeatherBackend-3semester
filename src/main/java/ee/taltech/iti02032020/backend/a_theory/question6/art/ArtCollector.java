@@ -1,7 +1,16 @@
 package ee.taltech.iti02032020.backend.a_theory.question6.art;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
+@RequestMapping("Painting")
+@RestController
 public class ArtCollector {
 
     //todo for question 6 there are 4 assignments in total
@@ -41,4 +50,22 @@ public class ArtCollector {
     void emptyMethodVoid(){
 
     }
+
+    @GetMapping("{page}")
+    public List<Painting> getPaintingsByPage(@PathVariable Integer page) {
+        return emptyMethodReturnList();
+    }
+
+    @PostMapping
+    public void savePainting(@RequestBody Painting painting) {
+        emptyMethodVoid();
+    }
+
+    @GetMapping("{id}")
+    public Painting getPaintingDetails(@PathVariable Long id) {
+//        return painting.database.getById(id);
+        return emptyMethodReturn1();
+    }
+
+
 }

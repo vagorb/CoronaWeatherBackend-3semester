@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ForecastControllerTest {
 
 
-
     @Autowired
     private TestRestTemplate testRestTemplate;
 
@@ -32,7 +31,6 @@ class ForecastControllerTest {
     };
 
     @Test
-    @Transactional
     void deleteFromDatabase() {
         Forecast forecast1 = new Forecast("Estonia", "CityDoNotExistInDatabase1",null, null, "45", "45", null, null, null);
         testRestTemplate.exchange("/Forecast", HttpMethod.POST, new HttpEntity<>(forecast1), Forecast.class);
@@ -45,7 +43,6 @@ class ForecastControllerTest {
 
 
     @Test
-    @Transactional
     void getTopFive() {
         Forecast forecast1 = new Forecast("Estonia", "CityDoNotExistInDatabase1",null, null, "45", "45", null, null, null);
         Forecast forecast2 = new Forecast("Estonia", "CityDoNotExistInDatabase2",null, null, "45", "45", null, null, null);
@@ -62,7 +59,6 @@ class ForecastControllerTest {
     }
 
     @Test
-    @Transactional
     void saveOrUpdateInfoFromExternalAPIInDatabase() {
         testRestTemplate.exchange("/Forecast/city/sitka",
                 HttpMethod.GET, null, Forecast.class);
@@ -76,7 +72,6 @@ class ForecastControllerTest {
     }
 
     @Test
-    @Transactional
     void getForecastFiveDays() {
         ResponseEntity<List<DailyForecast>> exchange = testRestTemplate.exchange("/Forecast/lat/50/lon/50",
                 HttpMethod.GET, null, LIST_OF_FORECASTS_FOR_SEVEN_DAYS);
