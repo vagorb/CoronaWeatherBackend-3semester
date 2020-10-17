@@ -2,18 +2,18 @@ package ee.taltech.iti02032020.backend.controller;
 
 import ee.taltech.iti02032020.backend.model.DailyForecast;
 import ee.taltech.iti02032020.backend.model.Forecast;
-import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 

@@ -48,7 +48,7 @@ public class Chocolate {
     }
 
     @GetMapping("{id}")
-    public Cake getCakeById(@PathVariable String topping) {
+    public Cake getCakeById(@PathVariable String id) {
         return new Cake();
     }
 
