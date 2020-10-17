@@ -24,3 +24,5 @@ At this moment the project is only locally hosted, so to run the project you nee
 3. In Frontend you need to install nodejs and write following commands in IDE terminal(npm install -g @angular/cli after that npm install and finally ng serve or npm run start).
 4. After that you can click to url which is shown in console or terminal.
 5. That is it. You can use our App.
+***
+Information about app features in project wiki.
