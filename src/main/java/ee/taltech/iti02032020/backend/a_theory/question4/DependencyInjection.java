@@ -1,12 +1,4 @@
-package a_theory.question4;
-
-import ee.taltech.iti02032020.backend.model.Forecast;
-import ee.taltech.iti02032020.backend.service.ForecastService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+package ee.taltech.iti02032020.backend.a_theory.question4;
 
 public class DependencyInjection {
 

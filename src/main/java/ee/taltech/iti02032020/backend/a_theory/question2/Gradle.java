@@ -1,4 +1,4 @@
-package a_theory.question2;
+package ee.taltech.iti02032020.backend.a_theory.question2;
 
 public class Gradle {
 

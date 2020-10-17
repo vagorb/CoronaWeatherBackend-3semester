@@ -1,4 +1,4 @@
-package a_theory.question3;
+package ee.taltech.iti02032020.backend.a_theory.question3;
 
 public abstract class Animal {
     String color;

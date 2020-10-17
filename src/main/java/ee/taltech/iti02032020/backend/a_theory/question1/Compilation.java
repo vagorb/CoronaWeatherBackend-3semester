@@ -1,4 +1,4 @@
-package a_theory.question1;
+package ee.taltech.iti02032020.backend.a_theory.question1;
 
 public class Compilation {
 

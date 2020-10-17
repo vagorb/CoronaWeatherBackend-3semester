@@ -1,7 +1,16 @@
-package a_theory.question6.chocolate;
-
+package ee.taltech.iti02032020.backend.a_theory.question6.chocolate;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+@RequestMapping("Cake")
+@RestController
 public class Chocolate {
 
     //todo for question 6 there are 4 assignments in total
@@ -32,15 +41,26 @@ public class Chocolate {
 
 
     //todo here are some examples of empty methods
-    List<Cake> emptyMethodReturnList(){
-        return List.of();
+
+    @GetMapping("ingredients/{ingredients}/toppings/{toppings}")
+    public List<Cake> getCakeByIngredient(@PathVariable List<String> ingredients, @PathVariable List<String> toppings) {
+        return List.of(new Cake());
     }
 
-    Cake emptyMethodReturn1(){
+    @GetMapping("{id}")
+    public Cake getCakeById(@PathVariable String topping) {
         return new Cake();
     }
 
-    void emptyMethodVoid(){
+    @PostMapping
+    public void saveCake(@RequestBody Cake cake)  {
+    }
 
+    @PutMapping("{id}")
+    public void updateCake(@RequestBody Cake cake, @PathVariable Long id) {
+    }
+
+    @DeleteMapping("{id}")
+    public void sellCake(@PathVariable Long id) {
     }
 }

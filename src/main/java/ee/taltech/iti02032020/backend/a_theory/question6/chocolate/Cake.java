@@ -1,4 +1,5 @@
-package a_theory.question6.chocolate;
+package ee.taltech.iti02032020.backend.a_theory.question6.chocolate;
+
 
 import java.util.List;
 

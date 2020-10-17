@@ -1,17 +1,8 @@
 package ee.taltech.iti02032020.backend.request;
-
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import ee.taltech.iti02032020.backend.model.CoronaVirus;
-import okhttp3.Connection;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 
 public class CoronaRequest {

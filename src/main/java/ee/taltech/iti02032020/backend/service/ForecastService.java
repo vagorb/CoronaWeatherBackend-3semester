@@ -1,5 +1,4 @@
 package ee.taltech.iti02032020.backend.service;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import ee.taltech.iti02032020.backend.exception.CityNotFoundException;
@@ -61,8 +60,6 @@ public class ForecastService {
             throw new CityNotFoundException();
         }
     }
-
-
 
     public Forecast update(Forecast forecast, Long id) {
         if (forecast.getCountryName() == null || forecast.getCity() == null || forecast.getLat() == null
@@ -204,5 +201,4 @@ public class ForecastService {
         sb.append("Good luck and stay safe, thanks for using CoronaWeather.");
         return sb.toString();
     }
-
 }

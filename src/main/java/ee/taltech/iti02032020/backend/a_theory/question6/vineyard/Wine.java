@@ -1,4 +1,4 @@
-package a_theory.question6.vineyard;
+package ee.taltech.iti02032020.backend.a_theory.question6.vineyard;
 
 public class Wine {
     private Long id;
