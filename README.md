@@ -33,5 +33,5 @@ Selected user stories :
 2. I as a guest user of the app want to find information about upcoming weather for the week, because I want to discover changes in weather beforehand. (Second user story)
 3. I as a guestuser of the app want to get some suggestions based on the local weather, because i want to know what clothes to wear, do i need an umbrella and etc. (Fourth user story)
 4. I as a guestuser of the app want to get information about all coronavirus cases, deaths and etc. in my country throughout the whole time, because I want to have a full view on the situation. (Sixth user story)
-5. I as a guestuser of the app, want to see most searched places, because I want to find new places to visit. (Nineth user story)
-6. I as a guest user of the app, want to save my living place to database and get up-to-date info about it, because I live in far place and can not find info in app just by the name of the city.(Tenth user story)
+5. I as a guest user of the app, want to save my living place to database and get up-to-date info about it, because I live in far place and can not find info in app just by the name of the city.(Tenth user story)
+6. I as a guestuser of the app, want to see most searched places, because I want to find new places to visit. (Nineth user story)
