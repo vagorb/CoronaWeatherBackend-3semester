@@ -57,4 +57,5 @@ public class ForecastController {
     public List<String> getTopFive() {
         return forecastService.topFiveSearches();
     }
+
 }
