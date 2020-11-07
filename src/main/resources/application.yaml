@@ -16,8 +16,8 @@ spring:
 
     url: jdbc:h2:mem:testdb;AUTO_SERVER=TRUE
     driverClassName: org.h2.Driver
-    username: say
-    password: hello
+    username: sa
+    password:
   h2:
     console:
       enabled: true
