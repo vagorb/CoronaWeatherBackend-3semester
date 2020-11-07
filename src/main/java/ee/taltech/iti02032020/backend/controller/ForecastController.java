@@ -18,8 +18,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ForecastController {
-
-
+    
     @Autowired
     private ForecastService forecastService;
 
