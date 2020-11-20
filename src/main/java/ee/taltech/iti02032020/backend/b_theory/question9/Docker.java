@@ -13,7 +13,8 @@ public class Docker {
 
     //todo C
     // What is docker?
-    // Answer: Software platform that virtualize the operating system of the computer to make process of building, running, managing and distributing applications easier, by using containers with packaged necessary parts.
+    // Answer: Software platform that virtualize the operating system of the computer to make process of building,
+    // running, managing and distributing applications easier, by using containers with packaged necessary parts.
 
     //todo D
     // Name and explain docker container benefits over virtual machine setup (java jar as system process and installed nginx)
@@ -34,5 +35,6 @@ public class Docker {
     //todo G
     // Name and explain why are companies slow in moving existing systems to docker architecture (do not explain why docker is bad)
     // 1 It could be hard to split existing big system for smaller parts and because of that use of Docker will not gain much value.
-    // 2 Moving existing systems to docker architecture is time consuming and could not bring profit. Systems are working fine so there is no particular reason to do something with them and spend valuable time.
+    // 2 Moving existing systems to docker architecture is time consuming and could not bring profit.
+    // Systems are working fine so there is no particular reason to do something with them and spend valuable time.
 }

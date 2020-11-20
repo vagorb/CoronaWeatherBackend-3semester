@@ -9,8 +9,8 @@ public class FirstReadMeSOLID {
     // I would like you to tell me what solid is and then explain in detail each part of the principle.
     // What is solid?
     // S (Nr1isS.java) stands for Single-responsibility and is done by Oleg Pahhomov as an example
-    // O (Nr2isO.java)
+    // O (Nr2isO.java) done by Dmitri Voronoi
     // L (Nr3isL.java)
-    // I (Nr4isI.java)
+    // I (Nr4isI.java) stands for Interface Segregation Principle and is done by Vassili Gorbatsov
     // D (Nr5isD.java)
 }
