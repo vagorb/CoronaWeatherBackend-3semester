@@ -70,5 +70,7 @@ public class Nr4isI {
         public String writeCauseOfAbsence() {
             return null;
         }
+
     }
+    
 }
