@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -42,25 +43,31 @@ public class Chocolate {
 
     //todo here are some examples of empty methods
 
-    @GetMapping("ingredients/{ingredients}/toppings/{toppings}")
-    public List<Cake> getCakeByIngredient(@PathVariable List<String> ingredients, @PathVariable List<String> toppings) {
-        return List.of(new Cake());
+    List<Cake> emptyMethodReturnList(){
+        return List.of();
     }
 
-    @GetMapping("{id}")
-    public Cake getCakeById(@PathVariable String id) {
+    Cake emptyMethodReturn1(){
         return new Cake();
     }
 
+    void emptyMethodVoid(){
+    }
+
+    @GetMapping
+    public List<Cake> getCakeByIngredient(@RequestParam List<String> ingredients, @RequestParam List<String> toppings) {
+        return emptyMethodReturnList();
+    }
+
     @PostMapping
-    public void saveCake(@RequestBody Cake cake)  {
+    public Cake saveCake(@RequestBody Cake cake)  {
+        return emptyMethodReturn1();
     }
 
     @PutMapping("{id}")
-    public void updateCake(@RequestBody Cake cake, @PathVariable Long id) {
+    public Cake updateCake(@RequestBody Cake cake, @PathVariable Long id) {
+        return emptyMethodReturn1();
     }
 
-    @DeleteMapping("{id}")
-    public void sellCake(@PathVariable Long id) {
-    }
+
 }
