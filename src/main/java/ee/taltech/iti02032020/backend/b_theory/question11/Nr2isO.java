@@ -38,6 +38,15 @@ class HumanHealthCare implements HealthCare, Cemetery {
     @Override
     public boolean checkHealth() {
         return financialStability.equals("yes") && !allergies && !historyOfDiseases.contains("badDisease");
+        // inherited method to check health in general
+    }
+
+    public void makeSomeHumanRelatedChecks() {
+        // method to check class related specifications
+    }
+
+    public void confirmFinancialStability() {
+        // method to check class related specifications
     }
 
     @Override
@@ -45,6 +54,7 @@ class HumanHealthCare implements HealthCare, Cemetery {
         if (!checkHealth()) {
             digGrave();
         }
+        // inherited method that buries the dead
     }
 }
 
@@ -59,6 +69,11 @@ class AnimalHealthCare implements HealthCare, Cemetery {
     @Override
     public boolean checkHealth() {
         return homeless && !wild && physicallyOkey;
+        // inherited method to check health in general
+    }
+
+    public void checkIfAnimalIsWild() {
+        // method to check class related specifications
     }
 
     @Override
@@ -66,6 +81,7 @@ class AnimalHealthCare implements HealthCare, Cemetery {
         if (!checkHealth()) {
             digGrave();
         }
+        // inherited method that buries the dead
     }
 }
 
@@ -79,5 +95,6 @@ class reptileHealthCare implements  HealthCare {
     @Override
     public boolean checkHealth() {
         return deadly && !wild && testable;
+        // inherited method
     }
 }
