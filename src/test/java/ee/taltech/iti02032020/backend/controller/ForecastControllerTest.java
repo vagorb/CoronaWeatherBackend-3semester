@@ -36,7 +36,7 @@ class ForecastControllerTest {
         ResponseEntity<List<String>> exchange = testRestTemplate.exchange("/Forecast",
                 HttpMethod.GET, null, LIST_OF_FORECASTS);
         List<String> cities = assertOk(exchange);
-        assertEquals(0, cities.size());
+        assertEquals(1, cities.size());
     }
 
 
