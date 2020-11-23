@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
-@RequestMapping("Forecast")
+@RequestMapping({"Forecast", "Forecast2"})
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ForecastController {
