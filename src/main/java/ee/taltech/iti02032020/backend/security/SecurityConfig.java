@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.GET, "/Forecast/**").permitAll()
-                .anyRequest().fullyAuthenticated()
+                .anyRequest().fullyAuthenticated();
 //                .and()
 //                .formLogin();
 
