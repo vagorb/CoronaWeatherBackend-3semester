@@ -21,12 +21,15 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-test'
 	runtimeOnly 'com.h2database:h2'
 	compile 'io.springfox:springfox-boot-starter:3.0.0'
+	compile 'org.apache.commons:commons-collections4:4.4'
+	compile 'org.apache.commons:commons-lang3:3.11'
 	compile 'io.jsonwebtoken:jjwt:0.9.1'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	compileOnly 'org.projectlombok:lombok:1.18.12'
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	implementation("com.squareup.okhttp3:okhttp:4.9.0")
 }
 
