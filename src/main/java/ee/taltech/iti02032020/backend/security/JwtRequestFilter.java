@@ -2,6 +2,7 @@ package ee.taltech.iti02032020.backend.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
@@ -27,35 +28,37 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER_ = "Bearer ";
-
-    @Resource
+        @Autowired
+        private MyUserDetailsService myUserDetailsService;
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         String jwtToken = getToken(request);
         if (jwtToken == null) {
-            filterChain.doFilter(request, response);
+            //passing without authentication to another steps
+            chain.doFilter(request, response);
             return;
         }
         String username = getUsername(jwtToken);
         if (username == null) {
-            filterChain.doFilter(request, response);
+            //passing without authentication to another steps
+            chain.doFilter(request, response);
             return;
         }
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-//            UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
-//            if (jwtTokenProvider.validateToken(jwtToken, userDetails)) {
-//                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-//                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//            }
+            UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
+                if (jwtTokenProvider.validateToken(jwtToken, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
         }
-        filterChain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
-
 
     private String getUsername(String jwtToken) {
         try {
@@ -64,10 +67,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             log.error("Unable to get JWT Token", e);
         } catch (ExpiredJwtException e) {
             log.error("JWT Token has expired", e);
+        } catch (Exception e){
+            log.error("JWT Token has unexpected error", e);
         }
         return null;
     }
-
 
     private String getToken(HttpServletRequest request) {
         final String requestTokenHeader = request.getHeader(AUTHORIZATION);

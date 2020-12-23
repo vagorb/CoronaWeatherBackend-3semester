@@ -1,6 +1,7 @@
 package ee.taltech.iti02032020.backend.controller;
 
-//import ee.taltech.heroesbackend.security.UserSessionHolder;
+
+import ee.taltech.iti02032020.backend.security.UserSessionHolder;
 import ee.taltech.iti02032020.backend.service.users.LoginService;
 import ee.taltech.iti02032020.backend.service.users.UserService;
 import ee.taltech.iti02032020.backend.service.users.dto.LoginDto;
@@ -23,19 +24,19 @@ public class UserController {
     private final UserService userService;
     private final LoginService loginService;
 
-//    @PostMapping("register")
-//    public ResponseEntity<Void> register(@RequestBody RegisterDto registerDto){
-//        userService.saveUser(registerDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-//
-//    @PostMapping("login")
-//    public LoginResponse login(@RequestBody LoginDto loginDto){
-//        return loginService.login(loginDto);
-//    }
-//
-//    @GetMapping("me")
-//    public Object getMe() {
-//        return UserSessionHolder.getLoggedInUser();
-//    }
+    @PostMapping("register")
+    public ResponseEntity<Void> register(@RequestBody RegisterDto registerDto){
+        userService.saveUser(registerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("login")
+    public LoginResponse login(@RequestBody LoginDto loginDto){
+        return loginService.login(loginDto);
+    }
+
+    @GetMapping("me")
+    public Object getMe() {
+        return UserSessionHolder.getLoggedInUser();
+    }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,114 +17,67 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.annotation.Resource;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true) //this makes spring use @Secured
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-    @Autowired
-    private UsersConfig usersConfig;
+@Configuration // this marks this class as configuration, so spring knows to look for config
+@EnableWebSecurity//(debug = true) // enables the whole thing, turn on debug to see filters applied to your requests
+@EnableGlobalMethodSecurity(securedEnabled = true) //this makes spring use @Secured
+public class SecurityConfig extends WebSecurityConfigurerAdapter { //WebSecurityConfigurerAdapter is the main spring security class you implement
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-//    @Autowired
-//    private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
-//    @Resource
-//    private JwtTokenProvider jwtTokenProvider;
-
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(usersConfig.getUserName()).password(passwordEncoder().encode(usersConfig.getUserPassword()))
-                .authorities(Roles.USER)
-                .and()
-                .withUser(usersConfig.getAdminName()).password(passwordEncoder().encode(usersConfig.getAdminPassword()))
-                .authorities(Roles.USER, Roles.ADMIN);
+        auth.userDetailsService(myUserDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf().disable() //cross site request forgery, it's a must if we use cookies
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // IT"S JUST STATELESS
+                .sessionCreationPolicy(STATELESS)
                 .and()
-//                .and()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
+//                this is for url based security
                 .antMatchers("/").permitAll()
+                .antMatchers("/users/register").permitAll()
+                .antMatchers("/users/login").permitAll()
+                .antMatchers("/api/swagger-ui/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/Forecast/**").permitAll()
-                .anyRequest().fullyAuthenticated();
-//                .and()
-//                .formLogin();
+                .antMatchers(HttpMethod.POST, "/Forecast/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/Forecast/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/Forecast/**").permitAll()
 
-//                .and()
-//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+//                .antMatchers("/user").hasRole("USER")
+//                .antMatchers("/admin").hasRole("ADMIN")
+                .anyRequest().fullyAuthenticated()
+        ; //if this is not disabled your https frontend must have https (not http) on backend;
     }
-//                httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                // this is for url based security
-////                    .antMatchers("/").permitAll()
-////                    .antMatchers("/user").hasRole("USER")
-////                    .antMatchers("/admin").hasRole("ADMIN")
-//                .anyRequest().fullyAuthenticated()
-//                .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-//                    .invalidateHttpSession(true)
-//                    .deleteCookies("JSESSIONID")
-//                .and()
-//                .csrf().disable() // cross site request forgery, it's a must if we use cookies
-//                .headers().httpStrictTransportSecurity().disable(); // if this is not disabled your https frontend must have https ( not http ) on backend
 
-
-//        		http
-//                .authorizeRequests()
-//                        .antMatchers("/").permitAll()
-//                        .antMatchers("/user").hasAnyRole("ROLE_USER")
-//                        .antMatchers("/admin").hasAnyRole("ROLE_ADMIN")
-//                        .anyRequest()
-//                        .authenticated()
-//                        .and()
-//                .anyRequest().authenticated()
-//				.and()
-//			.formLogin().and()
-//			.httpBasic();
-//    }
-//        http.authorizeRequests()
-//                .antMatchers("/securityNone").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .httpBasic();
-
-
-//                .authenticationEntryPoint(authenticationEntryPoint);
-
-//        http.addFilterAfter(new CustomFilter(),
-//                BasicAuthenticationFilter.class);
-//    }
-//    		logger.debug("Using default configure(HttpSecurity). If subclassed this will potentially override subclass configure(HttpSecurity).");
-//
-//		http
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
-//				.and()
-//			.formLogin().and()
-//			.httpBasic();
-//}
-
+    /**
+     * password encoder, bcrypt is one of the algorithms
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * authentication manager is used as entrance to creating authentication
+     */
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 }
