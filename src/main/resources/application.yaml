@@ -24,3 +24,13 @@ spring:
 logging:
   file:
     path: ./logs
+
+users:
+  userName: user
+  userPassword: user
+  adminName: admin
+  adminPassword: admin
+
+jwt:
+  secret: user
+  durationMin: 10

@@ -1,8 +1,10 @@
 package ee.taltech.iti02032020.backend.controller;
 import ee.taltech.iti02032020.backend.model.DailyForecast;
 import ee.taltech.iti02032020.backend.model.Forecast;
+import ee.taltech.iti02032020.backend.security.Roles;
 import ee.taltech.iti02032020.backend.service.ForecastService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
-@RequestMapping({"Forecast", "Forecast2"})
+@RequestMapping("Forecast")
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ForecastController {
@@ -55,6 +57,18 @@ public class ForecastController {
     @GetMapping
     public List<String> getTopFive() {
         return forecastService.topFiveSearches();
+    }
+
+    @Secured(Roles.USER)
+    @GetMapping("user")
+    public String user() {
+        return "USER";
+    }
+
+    @Secured(Roles.ADMIN)
+    @GetMapping("admin")
+    public String admin() {
+        return "Admin";
     }
 
 }
