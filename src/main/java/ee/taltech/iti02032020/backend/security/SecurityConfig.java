@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //WebSecurity
                 .and()
                 .authorizeRequests()
 //                this is for url based security
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/users/register").permitAll()
                 .antMatchers("/users/login").permitAll()
                 .antMatchers("/api/swagger-ui/**").permitAll()

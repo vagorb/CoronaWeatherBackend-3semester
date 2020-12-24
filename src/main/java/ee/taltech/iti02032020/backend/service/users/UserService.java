@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
@@ -29,7 +31,13 @@ public class UserService {
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setRole(DbRole.USER);
+        user.setHometown(registerDto.getHometown());
         usersRepository.save(user);
         //email sent out to confirm it, not necessary fot iti0203
+    }
+
+    public List<User> findAll() {
+        System.out.println(usersRepository.findAll());
+        return usersRepository.findAll();
     }
 }

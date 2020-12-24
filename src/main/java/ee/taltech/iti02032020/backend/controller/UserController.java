@@ -1,6 +1,7 @@
 package ee.taltech.iti02032020.backend.controller;
 
 
+import ee.taltech.iti02032020.backend.model.User;
 import ee.taltech.iti02032020.backend.security.UserSessionHolder;
 import ee.taltech.iti02032020.backend.service.users.LoginService;
 import ee.taltech.iti02032020.backend.service.users.UserService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequestMapping("users")
 @RestController
 @AllArgsConstructor
@@ -27,6 +30,9 @@ public class UserController {
     @PostMapping("register")
     public ResponseEntity<Void> register(@RequestBody RegisterDto registerDto){
         userService.saveUser(registerDto);
+//        System.out.println(registerDto.getUsername());
+//        System.out.println(registerDto.getPassword());
+//        System.out.println(registerDto.toString());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -38,5 +44,10 @@ public class UserController {
     @GetMapping("me")
     public Object getMe() {
         return UserSessionHolder.getLoggedInUser();
+    }
+
+    @GetMapping
+    public List<User> getAllRegisteredUsers() {
+        return userService.findAll();
     }
 }

@@ -39,6 +39,7 @@ public class LoginService {
                 .username(myUser.getUsername())
                 .token(token)
                 .role(myUser.getDbRole())
+                .hometown(myUser.getHometown())
                 .build();
 
     }
