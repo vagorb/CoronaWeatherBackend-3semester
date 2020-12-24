@@ -30,7 +30,7 @@ public class ForecastController {
     }
 
     // For old login form usage ALLOWED ONLY FOR LOGGED IN USERS
-    @Secured(Roles.USER)
+//    @Secured(Roles.USER)
     @PostMapping
     public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
