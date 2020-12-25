@@ -50,20 +50,20 @@ public class UserService {
             throw new UserException("Missing username and hometown");
         } else if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
                 && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
-            User dbUser = usersRepository.findAllByUsername(updateDto.getUsername()).get(0);
+            User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setUsername(updateDto.getUsername());
             usersRepository.save(dbUser);
             return dbUser;
         } else if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
           && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
-            User dbUser = usersRepository.findAllByUsername(updateDto.getUsername()).get(0);
+            User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setHometown(updateDto.getHometown());
             usersRepository.save(dbUser);
             return dbUser;
         } else if (isNotBlank(updateDto.getHometown()) && isNotBlank(updateDto.getUsername())
                 && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
         && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
-            User dbUser = usersRepository.findAllByUsername(updateDto.getUsername()).get(0);
+            User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setUsername(updateDto.getUsername());
             dbUser.setHometown(updateDto.getHometown());
             usersRepository.save(dbUser);

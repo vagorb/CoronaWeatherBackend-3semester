@@ -40,12 +40,14 @@ public class ForecastController {
 //    public Forecast updateForecast(@RequestBody Forecast forecast, @PathVariable Long id) {
 //        return forecastService.update(forecast, id);
 //    }
+
     @Secured(Roles.ADMIN)
     @DeleteMapping("{id}")
     public void deleteForecast(@PathVariable Long id) {
         forecastService.delete(id);
     }
 
+    @Secured(Roles.USER)
     @GetMapping("city/{city}")
     public Forecast getForecastByCity(@PathVariable String city) throws IOException {
         return forecastService.getForecastByCity(city);

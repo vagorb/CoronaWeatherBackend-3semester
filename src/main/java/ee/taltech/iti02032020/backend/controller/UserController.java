@@ -44,9 +44,8 @@ public class UserController {
     }
 
     @Secured(Roles.USER)
-    @PutMapping("update")
+    @PostMapping("update")
     public User update(@RequestBody UpdateDto updateDto){
-        userService.updateUser(updateDto);
         return userService.updateUser(updateDto);
     }
 

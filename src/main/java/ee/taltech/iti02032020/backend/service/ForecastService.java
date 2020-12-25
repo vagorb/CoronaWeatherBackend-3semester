@@ -41,6 +41,8 @@ public class ForecastService {
         if (forecast.getId() != null){
             throw new PropertyNotFoundException();
         }
+        String normalCity = forecast.getCity().substring(0, 1).toUpperCase() + forecast.getCity().substring(1).toLowerCase();
+        forecast.setCity(normalCity);
         String forecastInfo = forecastRequest.ForecastRequestCity(forecast.getCity());
         JsonObject json = new Gson().fromJson(forecastInfo, JsonObject.class);
         int cod = json.get("cod").getAsInt();
