@@ -42,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //WebSecurity
                 .csrf().disable() //cross site request forgery, it's a must if we use cookies
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
+                .headers().frameOptions().disable()
+                .and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(STATELESS)
@@ -62,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //WebSecurity
 //                .antMatchers("/user").hasRole("USER")
 //                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().fullyAuthenticated()
-        ; //if this is not disabled your https frontend must have https (not http) on backend;
+        ;
     }
 
     /**

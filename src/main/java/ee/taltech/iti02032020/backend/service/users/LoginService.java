@@ -41,6 +41,5 @@ public class LoginService {
                 .role(myUser.getDbRole())
                 .hometown(myUser.getHometown())
                 .build();
-
     }
 }

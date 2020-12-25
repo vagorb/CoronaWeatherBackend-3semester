@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 @RequestMapping("Forecast")
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class ForecastController {
 
     @Autowired
@@ -30,17 +30,17 @@ public class ForecastController {
     }
 
     // For old login form usage ALLOWED ONLY FOR LOGGED IN USERS
-//    @Secured(Roles.USER)
+    @Secured(Roles.USER)
     @PostMapping
     public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
     }
 
-    @PutMapping("{id}")
-    public Forecast updateForecast(@RequestBody Forecast forecast, @PathVariable Long id) {
-        return forecastService.update(forecast, id);
-    }
-
+//    @PutMapping("{id}")
+//    public Forecast updateForecast(@RequestBody Forecast forecast, @PathVariable Long id) {
+//        return forecastService.update(forecast, id);
+//    }
+    @Secured(Roles.ADMIN)
     @DeleteMapping("{id}")
     public void deleteForecast(@PathVariable Long id) {
         forecastService.delete(id);
@@ -59,18 +59,6 @@ public class ForecastController {
     @GetMapping
     public List<String> getTopFive() {
         return forecastService.topFiveSearches();
-    }
-
-    @Secured(Roles.USER)
-    @GetMapping("user")
-    public String user() {
-        return "USER";
-    }
-
-    @Secured(Roles.ADMIN)
-    @GetMapping("admin")
-    public String admin() {
-        return "Admin";
     }
 
 }

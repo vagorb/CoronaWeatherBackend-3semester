@@ -26,7 +26,6 @@ public class User {
     private String username;
     private String password;
     private String hometown;
-    private String email;
     @Enumerated(EnumType.STRING)
     private DbRole role;
 }
