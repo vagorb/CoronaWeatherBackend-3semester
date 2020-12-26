@@ -3,7 +3,7 @@ package ee.taltech.iti02032020.backend.controller;
 
 import ee.taltech.iti02032020.backend.model.User;
 import ee.taltech.iti02032020.backend.security.Roles;
-import ee.taltech.iti02032020.backend.security.UserSessionHolder;
+//import ee.taltech.iti02032020.backend.security.UserSessionHolder;
 import ee.taltech.iti02032020.backend.service.users.LoginService;
 import ee.taltech.iti02032020.backend.service.users.UserService;
 import ee.taltech.iti02032020.backend.service.users.dto.LoginDto;
@@ -45,14 +45,15 @@ public class UserController {
 
     @Secured(Roles.USER)
     @PostMapping("update")
-    public User update(@RequestBody UpdateDto updateDto){
-        return userService.updateUser(updateDto);
+    public ResponseEntity<Void> update(@RequestBody UpdateDto updateDto){
+         userService.updateUser(updateDto);
+         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("me")
-    public Object getMe() {
-        return UserSessionHolder.getLoggedInUser();
-    }
+//    @GetMapping("me")
+//    public Object getMe() {
+//        return UserSessionHolder.getLoggedInUser();
+//    }
 
     @GetMapping
     public List<User> getAllRegisteredUsers() {

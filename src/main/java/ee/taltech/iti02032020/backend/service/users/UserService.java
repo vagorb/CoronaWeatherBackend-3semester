@@ -1,7 +1,6 @@
 package ee.taltech.iti02032020.backend.service.users;
 
 import ee.taltech.iti02032020.backend.exception.UserException;
-import ee.taltech.iti02032020.backend.model.CoronaVirus;
 import ee.taltech.iti02032020.backend.model.User;
 import ee.taltech.iti02032020.backend.repository.UsersRepository;
 import ee.taltech.iti02032020.backend.security.DbRole;
@@ -45,29 +44,29 @@ public class UserService {
         }
     }
 
-    public User updateUser(UpdateDto updateDto) {
+    public void updateUser(UpdateDto updateDto) {
         if (isBlank(updateDto.getUsername()) && isBlank(updateDto.getHometown())) {
             throw new UserException("Missing username and hometown");
-        } else if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
+        } if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
                 && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
             User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setUsername(updateDto.getUsername());
             usersRepository.save(dbUser);
-            return dbUser;
-        } else if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
+
+        } if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
           && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
             User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setHometown(updateDto.getHometown());
             usersRepository.save(dbUser);
-            return dbUser;
-        } else if (isNotBlank(updateDto.getHometown()) && isNotBlank(updateDto.getUsername())
+
+        } if (isNotBlank(updateDto.getHometown()) && isNotBlank(updateDto.getUsername())
                 && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
         && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
             User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setUsername(updateDto.getUsername());
             dbUser.setHometown(updateDto.getHometown());
             usersRepository.save(dbUser);
-            return dbUser;
+
         }  else {
             throw new UserException("Username already exists");
         }

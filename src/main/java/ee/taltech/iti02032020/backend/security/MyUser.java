@@ -20,12 +20,4 @@ public class MyUser extends User {
         this.dbRole = dbRole;
         this.hometown = hometown;
     }
-
-    public MyUser(String username, String password, boolean enabled, boolean accountNonExpired,
-                  boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities,
-                  Long id, DbRole dbRole) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.id = id;
-        this.dbRole = dbRole;
-    }
 }

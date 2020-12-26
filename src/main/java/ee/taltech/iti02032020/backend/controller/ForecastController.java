@@ -30,7 +30,7 @@ public class ForecastController {
     }
 
     // For old login form usage ALLOWED ONLY FOR LOGGED IN USERS
-    @Secured(Roles.USER)
+    @Secured({Roles.USER, Roles.ADMIN})
     @PostMapping
     public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
@@ -47,12 +47,13 @@ public class ForecastController {
         forecastService.delete(id);
     }
 
-    @Secured(Roles.USER)
+
     @GetMapping("city/{city}")
     public Forecast getForecastByCity(@PathVariable String city) throws IOException {
         return forecastService.getForecastByCity(city);
     }
 
+    @Secured({Roles.USER, Roles.ADMIN})
     @GetMapping("lat/{lat}/lon/{lon}")
     public List<DailyForecast> getForecastFiveDays(@PathVariable String lat, @PathVariable String lon) throws IOException {
         return forecastService.getForecastFiveDays(lon, lat);
