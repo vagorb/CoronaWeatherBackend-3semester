@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -47,19 +45,19 @@ public class UserService {
     public void updateUser(UpdateDto updateDto) {
         if (isBlank(updateDto.getUsername()) && isBlank(updateDto.getHometown())) {
             throw new UserException("Missing username and hometown");
-        } if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
+        } else if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
                 && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
             User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setUsername(updateDto.getUsername());
             usersRepository.save(dbUser);
 
-        } if (isBlank(updateDto.getHometown()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
+        } else if (isBlank(updateDto.getUsername()) && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
           && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
             User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
             dbUser.setHometown(updateDto.getHometown());
             usersRepository.save(dbUser);
 
-        } if (isNotBlank(updateDto.getHometown()) && isNotBlank(updateDto.getUsername())
+        } else if (isNotBlank(updateDto.getHometown()) && isNotBlank(updateDto.getUsername())
                 && usersRepository.findAllByUsername(updateDto.getOldusername()).size() == 1
         && usersRepository.findAllByUsername(updateDto.getUsername()).size() == 0) {
             User dbUser = usersRepository.findAllByUsername(updateDto.getOldusername()).get(0);
@@ -70,10 +68,5 @@ public class UserService {
         }  else {
             throw new UserException("Username already exists");
         }
-    }
-
-    public List<User> findAll() {
-        System.out.println(usersRepository.findAll());
-        return usersRepository.findAll();
     }
 }

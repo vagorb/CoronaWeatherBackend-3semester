@@ -23,7 +23,7 @@ class ForecastControllerTest extends RestTemplate {
     void deleteFromDatabase() {
         Forecast forecast1 = new Forecast("Estonia", "CityDoNotExistInDatabase1",null, null, "45", "45", null, null, null);
         testRestTemplate.exchange("/Forecast", HttpMethod.POST, entity(forecast1, ADMIN), Forecast.class);
-        testRestTemplate.exchange("/Forecast/2", HttpMethod.DELETE, entity(null, ADMIN), Forecast.class);
+        testRestTemplate.exchange("/Forecast/CityDoNotExistInDatabase1", HttpMethod.DELETE, entity(null, ADMIN), Forecast.class);
         ResponseEntity<List<String>> exchange = testRestTemplate.exchange("/Forecast",
                 HttpMethod.GET, null, LIST_OF_FORECASTS);
         List<String> cities = assertOk(exchange);

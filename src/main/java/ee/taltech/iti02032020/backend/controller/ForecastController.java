@@ -5,12 +5,10 @@ import ee.taltech.iti02032020.backend.security.Roles;
 import ee.taltech.iti02032020.backend.service.ForecastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,27 +22,17 @@ public class ForecastController {
     @Autowired
     private ForecastService forecastService;
 
-    @GetMapping("{id}")
-    public Forecast getForecast(@PathVariable Long id) {
-        return forecastService.findById(id);
-    }
-
-    // For old login form usage ALLOWED ONLY FOR LOGGED IN USERS
-    @Secured({Roles.USER, Roles.ADMIN})
+    @Secured(Roles.USER)
     @PostMapping
     public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
     }
 
-//    @PutMapping("{id}")
-//    public Forecast updateForecast(@RequestBody Forecast forecast, @PathVariable Long id) {
-//        return forecastService.update(forecast, id);
-//    }
 
     @Secured(Roles.ADMIN)
-    @DeleteMapping("{id}")
-    public void deleteForecast(@PathVariable Long id) {
-        forecastService.delete(id);
+    @DeleteMapping("{city}")
+    public void deleteForecast(@PathVariable String city) {
+        forecastService.delete(city);
     }
 
 
@@ -53,7 +41,6 @@ public class ForecastController {
         return forecastService.getForecastByCity(city);
     }
 
-    @Secured({Roles.USER, Roles.ADMIN})
     @GetMapping("lat/{lat}/lon/{lon}")
     public List<DailyForecast> getForecastFiveDays(@PathVariable String lat, @PathVariable String lon) throws IOException {
         return forecastService.getForecastFiveDays(lon, lat);

@@ -10,19 +10,15 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.annotation.Resource;
-
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration // this marks this class as configuration, so spring knows to look for config
 @EnableWebSecurity//(debug = true) // enables the whole thing, turn on debug to see filters applied to your requests
 @EnableGlobalMethodSecurity(securedEnabled = true) //this makes spring use @Secured
-public class SecurityConfig extends WebSecurityConfigurerAdapter { //WebSecurityConfigurerAdapter is the main spring security class you implement
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
@@ -51,18 +47,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { //WebSecurity
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-//                this is for url based security
-                .antMatchers("/**").permitAll()
-                .antMatchers("/users/register").permitAll()
+                .antMatchers("/").permitAll()     // change to ==>  .antMatchers("/**").permitAll() for enabling h2 and swagger
+                .antMatchers( "/users/register").permitAll()
                 .antMatchers("/users/login").permitAll()
-                .antMatchers("/api/swagger-ui/**").permitAll()
+                .antMatchers("swagger-ui/**").permitAll()
+                .antMatchers("h2-console/**").permitAll()
+                .antMatchers("/users/update").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/Forecast/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/Forecast/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/Forecast/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/Forecast/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/Forecast/**").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/Forecast/**").hasRole("ADMIN")
 
-//                .antMatchers("/user").hasRole("USER")
-//                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().fullyAuthenticated()
         ;
     }
