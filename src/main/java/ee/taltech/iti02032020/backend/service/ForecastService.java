@@ -41,6 +41,8 @@ public class ForecastService {
         if (forecast.getId() != null){
             throw new PropertyNotFoundException();
         }
+        String normalCity = forecast.getCity().substring(0, 1).toUpperCase() + forecast.getCity().substring(1);
+        forecast.setCity(normalCity);
         String forecastInfo = forecastRequest.ForecastRequestCity(forecast.getCity());
         JsonObject json = new Gson().fromJson(forecastInfo, JsonObject.class);
         int cod = json.get("cod").getAsInt();
@@ -82,9 +84,10 @@ public class ForecastService {
         return forecastRepository.save(dbForecast);
     }
 
-    public void delete(Long id) {
-        Forecast dbForecast = findById(id);
-        forecastRepository.delete(dbForecast);
+    public void delete(String city) {
+        String normalCity = city.substring(0, 1).toUpperCase() + city.substring(1);
+
+        forecastRepository.delete(forecastRepository.findAllByCity(normalCity).get(0));
     }
 
     public Forecast getForecastByCity(String city) throws IOException {
