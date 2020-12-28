@@ -58,7 +58,6 @@ public class ChairsController {
     // (you can assume that by default it searches most popular first)
 
     // Vassili Gorbatšov
-    
     List<Chair> emptyMethodReturnList(){
         return List.of();
     }
