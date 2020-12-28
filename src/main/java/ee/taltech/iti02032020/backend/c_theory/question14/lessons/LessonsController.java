@@ -108,16 +108,15 @@ public class LessonsController {
     }
 
     //G
-    @GetMapping("students/lesson/{id}")
+    @GetMapping("{id}/students")
     public List<Students> getLessonStudents(@PathVariable Long id) {
 //        return lesson.get
         return emptyMethodReturnList2();
     }
 
     //H
-    @PutMapping("name/{id}")
+    @PutMapping("{id}/name")
     public void updateLessonName(@RequestParam String name, @PathVariable Long id) {
         emptyMethodVoid();
     }
-
 }
