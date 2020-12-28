@@ -1,5 +1,21 @@
 package ee.taltech.iti02032020.backend.c_theory.question14.lessons;
 
+
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RequestMapping("Lesson")
+@RestController
 public class LessonsController {
 
     //todo for question 14 there are 4 assignments in total
@@ -31,14 +47,77 @@ public class LessonsController {
 
     //todo H create a method to update lesson's name (and nothing else)
 
-    //todo G modify correct method to support searching lessons by course id while keeping original functionality
+    //todo I modify correct method to support searching lessons by course id while keeping original functionality
 
-    //todo H modify correct method to support searching by year with default being current year (2020)
+    //todo J modify correct method to support searching by year with default being current year (2020)
     // (you can ignore semesters or use year-semester string)
 
     //todo K modify correct method to order lessons
     // * by most visitors first
     // * by least visitors first
     // (you can assume that by default it searches by predefined lecturer's order)
+
+
+    List<Lesson> emptyMethodReturnList(){
+        return List.of();
+    }
+    List<Students> emptyMethodReturnList2(){
+        return List.of();
+    }
+
+    Lesson emptyMethodReturn1(){
+        return new Lesson();
+    }
+
+    void emptyMethodVoid(){
+
+    }
+
+    //B //I  //J //K
+    @GetMapping
+    public List<Lesson> getAllLessons(@RequestParam(required = false) String id,
+                                      @RequestParam(required = false, defaultValue = "2020") String year,
+                                      @RequestParam(value = "orderBy", defaultValue = "lecturersOrder") String orderBy,
+                                      @RequestParam(value = "direction", defaultValue = "lecturersDirection" ) Sort.Direction direction) {
+        return emptyMethodReturnList();
+    }
+
+    //C
+    @GetMapping("{id}")
+    public Lesson getLesson(@PathVariable Long id) {
+        return emptyMethodReturn1();
+    }
+
+    //D
+    @PostMapping
+    public void saveLesson(@RequestBody Lesson lesson) {
+//        lessonService.save(lesson);
+        emptyMethodVoid();
+    }
+
+    //E
+    @PutMapping("{id}")
+    public void updateLesson(@RequestBody Lesson lesson, @PathVariable Long id) {
+        emptyMethodVoid();
+    }
+
+    //F
+    @DeleteMapping("{id}")
+    public void deleteLesson(@PathVariable Long id) {
+        emptyMethodVoid();
+    }
+
+    //G
+    @GetMapping("students/lesson/{id}")
+    public List<Students> getLessonStudents(@PathVariable Long id) {
+//        return lesson.get
+        return emptyMethodReturnList2();
+    }
+
+    //H
+    @PutMapping("name/{id}")
+    public void updateLessonName(@RequestParam String name, @PathVariable Long id) {
+        emptyMethodVoid();
+    }
 
 }
