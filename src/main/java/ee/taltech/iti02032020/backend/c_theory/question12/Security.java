@@ -13,7 +13,9 @@ public class Security {
     //todo C
     // For web (HTTP backend) Spring Security is configured as a ... ? Explain it.
     // Think or read how Spring Security checks are injection into your application.
-    // Configured as (one word): REST API
-    // Description:
+    // Configured as (one word): FilterChain
+    // Description: It is a chain of checks/verifications that are used to determine whether the user is authenticated and whether the
+    // user is authorized to access this part of the application and to determine how to handle user requests.
+
 
 }

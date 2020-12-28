@@ -1,5 +1,21 @@
 package ee.taltech.iti02032020.backend.c_theory.question14.chairs;
 
+
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RequestMapping("chairs")
+@RestController
 public class ChairsController {
 
     //todo for question 14 there are 4 assignments in total
@@ -40,5 +56,68 @@ public class ChairsController {
     // * by lowest priced first
     // * by highest priced first
     // (you can assume that by default it searches most popular first)
+
+    List<Chair> emptyMethodReturnList(){
+        return List.of();
+    }
+
+    Chair emptyMethodReturnChair(){
+        return new Chair();
+    }
+
+    Designer emptyMethodReturnDesigner(){
+        return new Designer();
+    }
+
+    void emptyMethodVoid(){
+    }
+
+    // B K I J
+    @GetMapping
+    public List<Chair> getAllChairs (@RequestParam(value = "type", required = false) String type,    // I
+                                     @RequestParam(value = "stock", required = false) String inStock, // J
+                                     @RequestParam(value = "order", defaultValue = "popularity") String order,
+                                     @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+        return emptyMethodReturnList();
+    }
+
+    // C
+    @GetMapping("{id}")
+    public Chair getChair(@PathVariable Long id) {
+        return emptyMethodReturnChair();
+    }
+
+    // D
+    @PostMapping
+    public void saveChair(@RequestBody Chair chair) {
+        emptyMethodVoid();
+    }
+
+    // E
+    @PutMapping("{id}")
+    public void updateChair(@RequestBody Chair chair, @PathVariable Long id) {
+        emptyMethodVoid();
+    }
+
+
+    // F
+    @DeleteMapping("{id}")
+    public Chair deleteChair(@PathVariable Long id) {
+        return emptyMethodReturnChair();
+    }
+
+    // G or method G2 if we assume, that information about designer is in front, because Chair has property designer,
+    // but there were no logic to ask for it, because info about designer is already known.
+    // G                                                                    // G2
+    @GetMapping("designer/chair/{id}")                                            // @GetMapping("designer")
+    public Designer getChairDesigner(@PathVariable Long id) {               // public Designer getChairDesigner(@RequestParam Designer designer) {
+        return emptyMethodReturnDesigner();                                 // turn emptyMethodReturnDesigner();
+    }                                                                       // }
+
+    // H
+    @PutMapping("name/{id}")
+    public void updateChair(@RequestParam String name, @PathVariable Long id) {
+        emptyMethodVoid();
+    }
 
 }

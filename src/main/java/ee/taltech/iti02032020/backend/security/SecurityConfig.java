@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/Forecast/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/Forecast/**").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE, "/Forecast/**").hasRole("ADMIN")
-
                 .anyRequest().fullyAuthenticated()
         ;
     }
