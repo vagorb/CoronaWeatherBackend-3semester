@@ -57,6 +57,8 @@ public class ChairsController {
     // * by highest priced first
     // (you can assume that by default it searches most popular first)
 
+    // Vassili Gorbatšov
+    
     List<Chair> emptyMethodReturnList(){
         return List.of();
     }
@@ -109,13 +111,13 @@ public class ChairsController {
     // G or method G2 if we assume, that information about designer is in front, because Chair has property designer,
     // but there were no logic to ask for it, because info about designer is already known.
     // G                                                                    // G2
-    @GetMapping("designer/chair/{id}")                                            // @GetMapping("designer")
+    @GetMapping("{id}/designer")                                            // @GetMapping("designer")
     public Designer getChairDesigner(@PathVariable Long id) {               // public Designer getChairDesigner(@RequestParam Designer designer) {
         return emptyMethodReturnDesigner();                                 // turn emptyMethodReturnDesigner();
     }                                                                       // }
 
     // H
-    @PutMapping("name/{id}")
+    @PutMapping("{id}/name")
     public void updateChair(@RequestParam String name, @PathVariable Long id) {
         emptyMethodVoid();
     }
