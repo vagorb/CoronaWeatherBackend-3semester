@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
@@ -27,8 +28,7 @@ public class ForecastController {
     public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
     }
-
-
+    
     @Secured(Roles.ADMIN)
     @DeleteMapping("{city}")
     public void deleteForecast(@PathVariable String city) {
@@ -36,8 +36,8 @@ public class ForecastController {
     }
 
 
-    @GetMapping("city/{city}")
-    public Forecast getForecastByCity(@PathVariable String city) throws IOException {
+    @GetMapping("city")
+    public Forecast getForecastByCity(@RequestParam String city) throws IOException {
         return forecastService.getForecastByCity(city);
     }
 
