@@ -39,8 +39,8 @@ class ForecastControllerTest extends RestTemplate {
         testRestTemplate.exchange("/Forecast", HttpMethod.POST, entity(forecast1, USER), Forecast.class);
         testRestTemplate.exchange("/Forecast", HttpMethod.POST, entity(forecast2, USER), Forecast.class);
         testRestTemplate.exchange("/Forecast", HttpMethod.POST, entity(forecast4, USER), Forecast.class);
-        testRestTemplate.exchange("/Forecast/city/CityDoNotExistInDatabase4", HttpMethod.GET, null, Forecast.class);
-        testRestTemplate.exchange("/Forecast/city/CityDoNotExistInDatabase4", HttpMethod.GET, null, Forecast.class);
+        testRestTemplate.exchange("/Forecast/city?city=CityDoNotExistInDatabase4", HttpMethod.GET, null, Forecast.class);
+        testRestTemplate.exchange("/Forecast/city?city=CityDoNotExistInDatabase4", HttpMethod.GET, null, Forecast.class);
         ResponseEntity<List<String>> exchange = testRestTemplate.exchange("/Forecast",
                 HttpMethod.GET, null, LIST_OF_FORECASTS);
         List<String> cities = assertOk(exchange);
@@ -49,11 +49,11 @@ class ForecastControllerTest extends RestTemplate {
 
     @Test
     void saveOrUpdateInfoFromExternalAPIInDatabase() {
-        testRestTemplate.exchange("/Forecast/city/sitka",
+        testRestTemplate.exchange("/Forecast/city?city=sitka",
                 HttpMethod.GET, null, Forecast.class);
-        testRestTemplate.exchange("/Forecast/city/fairbanks",
+        testRestTemplate.exchange("/Forecast/city?city=fairbanks",
                 HttpMethod.GET, null, Forecast.class);
-        ResponseEntity<Forecast> exchange = testRestTemplate.exchange("/Forecast/city/fairbanks",
+        ResponseEntity<Forecast> exchange = testRestTemplate.exchange("/Forecast/city?city=fairbanks",
                 HttpMethod.GET, null, Forecast.class);
         Forecast forecast = assertOk(exchange);
         assertEquals("Fairbanks", forecast.getCity());
