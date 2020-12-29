@@ -28,8 +28,7 @@ public class ForecastController {
     public void saveForecast(@RequestBody Forecast forecast) throws IOException {
         forecastService.save(forecast);
     }
-
-
+    
     @Secured(Roles.ADMIN)
     @DeleteMapping("{city}")
     public void deleteForecast(@PathVariable String city) {
