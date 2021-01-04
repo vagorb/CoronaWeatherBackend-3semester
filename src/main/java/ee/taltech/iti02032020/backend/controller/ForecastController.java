@@ -36,7 +36,7 @@ public class ForecastController {
     }
 
 
-    @GetMapping({"city", "city2"})
+    @GetMapping("city")
     public Forecast getForecastByCity(@RequestParam String city) throws IOException {
         return forecastService.getForecastByCity(city);
     }

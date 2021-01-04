@@ -50,8 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()     // change to ==>  .antMatchers("/**").permitAll() for enabling h2 and swagger
                 .antMatchers( "/users/register").permitAll()
                 .antMatchers("/users/login").permitAll()
-                .antMatchers("swagger-ui/**").permitAll()
-                .antMatchers("h2-console/**").permitAll()
+//                .antMatchers("/swagger*/**").permitAll()
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/users/update").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/Forecast/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/Forecast/**").hasRole("USER")
