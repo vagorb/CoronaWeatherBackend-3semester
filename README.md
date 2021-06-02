@@ -1,6 +1,7 @@
 CoronaWeather app
 ***
 About our app:
+https://github.com/vagorb/CoronaWeatherBackend-3semester/wiki
 A lot of people do not want to spent a lot of time to get necessary information every morning. Nowadays corona virus and weather are the most common and important information. So our app will save a lot of time for you, because you can find all information about this topic in our app without spending time for googling, processing info and watching ads =))).
 ***
 Backend Technologies:
@@ -16,7 +17,7 @@ App created by Vassili Gorbatsov and Dmitri Voronoi.
 
 ***
 Setup guide:
-Our app could be acessed with this link: https://coronaweather.tk
+Our app could be acessed with this link: https://coronaweather.tk (currently not available)
 
 If you want to locally run the project:
 1. Copy back-end and front-end to intellij or another IDE.
@@ -26,7 +27,7 @@ If you want to locally run the project:
 5. That is it. You can use our App.
 ***
 Installation on the server guide:
-Link to our installation guide https://gitlab.cs.ttu.ee/vagorb/iti0203-2020-backend/-/wikis/Installation-Guide
+Link to our installation guide https://gitlab.cs.ttu.ee/vagorb/iti0203-2020-backend/-/wikis/Installation-Guide OR https://github.com/vagorb/CoronaWeatherBackend-3semester/wiki/Inatallation-guide
 ***
 Information about app features in project wiki.
 Link to project wiki https://gitlab.cs.ttu.ee/vagorb/iti0203-2020-backend/-/wikis/About-CoronaWeather-App
