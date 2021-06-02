@@ -1,7 +1,7 @@
 CoronaWeather app
 ***
 About our app:
-https://github.com/vagorb/CoronaWeatherBackend-3semester/wiki
+## https://github.com/vagorb/CoronaWeatherBackend-3semester/wiki
 A lot of people do not want to spent a lot of time to get necessary information every morning. Nowadays corona virus and weather are the most common and important information. So our app will save a lot of time for you, because you can find all information about this topic in our app without spending time for googling, processing info and watching ads =))).
 ***
 Backend Technologies:
